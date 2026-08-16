@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #0F766E;
+  --color-accent: #F59E0B;
+  --color-dark: #1E293B;
+  --color-light: #F8FAFC;
+  --color-white: #FFFFFF;
+  --color-muted: #64748B;
+  --color-error: #EF4444;
+  --color-success: #22C55E;
+
+  --color-background: var(--color-light);
+  --color-foreground: var(--color-dark);
+  
+  --font-sans: var(--font-inter), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @theme inline {
+    --color-background: var(--color-dark);
+    --color-foreground: var(--color-light);
   }
 }
 
+:root {
+  color-scheme: light dark;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base styles for RTL */
+[dir="rtl"] {
+  font-family: var(--font-cairo), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }

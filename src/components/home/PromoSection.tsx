@@ -1,0 +1,144 @@
+'use client';
+
+import { Link } from '@/i18n/routing';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Play } from 'lucide-react';
+
+export function PromoSection() {
+  const features = [
+    { num: '1.', title: 'Made in Germany.', desc: 'High quality engineering and design standards.' },
+    { num: '2.', title: 'Durable Frames.', desc: 'Built to withstand the toughest conditions.' },
+    { num: '3.', title: 'Easy Operation.', desc: 'Intuitive shifting and braking systems.' },
+    { num: '4.', title: 'Lifetime Warranty.', desc: 'Guaranteed quality for peace of mind.' },
+  ];
+
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
+  return (
+    <section className="relative w-full bg-[#1c1c1c] overflow-hidden py-24">
+      {/* Background Graphic/Texture */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1576858574144-67215f793b82?q=80&w=2070&auto=format&fit=crop")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      {/* Dark gradient overlay to ensure text is always readable */}
+      <div className="absolute inset-0 z-0 pointer-events-none bg-gradient-to-r from-[#1c1c1c] via-[#1c1c1c]/90 to-[#1c1c1c]/40" />
+      
+      <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
+        <div className="flex flex-col lg:flex-row gap-12 items-center">
+          
+          {/* Left Content */}
+          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+            >
+              Nothing <br />
+              Can <span className="text-[#e1251b]">Stop</span> You.
+            </motion.h2>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-base text-gray-400 mb-8 max-w-md leading-relaxed"
+            >
+              It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less.
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-row gap-4 mb-16"
+            >
+              <Link 
+                href="/products" 
+                className="px-8 py-3 bg-[#e1251b] hover:bg-red-700 text-white text-sm font-semibold tracking-wider uppercase transition-colors"
+              >
+                VIEW MORE
+              </Link>
+              <Link 
+                href="/products" 
+                className="px-8 py-3 bg-transparent border border-white hover:bg-white hover:text-black text-white text-sm font-semibold tracking-wider uppercase transition-all"
+              >
+                SHOP NOW
+              </Link>
+            </motion.div>
+
+            {/* Features Grid */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            >
+              {features.map((feature, index) => (
+                <div key={index} className="flex flex-col">
+                  <span className="text-[#e1251b] text-3xl md:text-4xl font-bold mb-2">{feature.num}</span>
+                  <h4 className="text-white text-sm font-bold mb-1">{feature.title}</h4>
+                  <p className="text-gray-400 text-xs leading-relaxed hidden sm:block">{feature.desc}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right Content - Video Embed */}
+          <div className="w-full lg:w-1/2 relative mt-12 lg:mt-0">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="relative w-full aspect-video bg-black rounded-lg shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden border border-white/10 group cursor-pointer"
+              onClick={() => setIsVideoPlaying(true)}
+            >
+              {!isVideoPlaying ? (
+                <>
+                  <img 
+                    src="/products/bike.jpg" 
+                    alt="Video Thumbnail" 
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300" 
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 rounded-full border border-white/50 flex items-center justify-center bg-black/20 group-hover:bg-[#e1251b]/90 group-hover:border-[#e1251b] transition-all duration-300">
+                      <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&mute=0&controls=1&rel=0" 
+                  title="Mountain Biking Video" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                  className="absolute inset-0"
+                ></iframe>
+              )}
+            </motion.div>
+            
+            {/* Demos vertical tab (matches original screenshot style) */}
+            <div className="absolute -right-4 md:-right-8 top-1/2 -translate-y-1/2 bg-black px-2 py-8 hidden lg:flex items-center justify-center border-l border-white/10">
+              <span className="text-white text-xs font-bold uppercase tracking-[0.2em] rotate-90 whitespace-nowrap">DEMOS</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}
