@@ -5,6 +5,7 @@ import { PromoSection } from '@/components/home/PromoSection';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
 import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { GalleryStrip } from '@/components/home/GalleryStrip';
+import { BikeFeaturesInfo } from '@/components/home/BikeFeaturesInfo';
 import { Testimonials } from '@/components/home/Testimonials';
 import { FAQSection } from '@/components/home/FAQSection';
 
@@ -18,6 +19,7 @@ export default function HomePage() {
       <ServicesPreview />
       <WhyChooseUs />
       <GalleryStrip />
+      <BikeFeaturesInfo />
       <Testimonials />
       <FAQSection />
 

@@ -23,11 +23,21 @@ const slides = [
   },
   {
     id: 2,
-    title1: 'Cube Road',
-    title2: 'Cyclocross',
+    title1: 'Carbon Roadster',
+    title2: 'Racing',
     title3: ' Bike.',
-    desc: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less.',
-    bikeImg: '/products/bike.jpg',
+    desc: 'Sleek carbon fiber road racing bike. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+    bikeImg: '/products/bike-5.png',
+    bgImg: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=2074&auto=format&fit=crop',
+    blendMode: '', // Default behavior
+  },
+  {
+    id: 3,
+    title1: 'Kids BMX',
+    title2: 'Star',
+    title3: ' Bike.',
+    desc: 'Safe and durable BMX bike for kids aged 7-12. Experience the joy of riding with maximum safety.',
+    bikeImg: '/products/bike-3.png',
     bgImg: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=2074&auto=format&fit=crop',
     blendMode: '', // Default behavior
   }
