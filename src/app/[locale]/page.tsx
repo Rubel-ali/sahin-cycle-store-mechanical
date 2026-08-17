@@ -1,4 +1,5 @@
 import { HeroBanner } from '@/components/home/HeroBanner';
+import { CategoryCards } from '@/components/home/CategoryCards';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { PromoSection } from '@/components/home/PromoSection';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
@@ -11,6 +12,7 @@ export default function HomePage() {
   return (
     <>
       <HeroBanner />
+      <CategoryCards />
       <FeaturedProducts />
       <PromoSection />
       <ServicesPreview />

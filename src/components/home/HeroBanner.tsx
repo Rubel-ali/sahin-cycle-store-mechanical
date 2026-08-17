@@ -4,6 +4,7 @@ import { Link } from '@/i18n/routing';
 import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -34,7 +35,10 @@ const slides = [
 
 export function HeroBanner() {
   const locale = useLocale();
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true },
+    [Autoplay({ delay: 5000, stopOnInteraction: true })]
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => {
