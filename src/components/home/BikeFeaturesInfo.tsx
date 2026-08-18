@@ -37,10 +37,29 @@ export function BikeFeaturesInfo() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white">
-      <div className="flex flex-col lg:flex-row min-h-[600px]">
+      {/* Background Image overlapping with darken blend mode to make white transparent */}
+      <div className="absolute inset-0 flex justify-end pointer-events-none overflow-hidden">
+        <img 
+          src="/biker-overlapping.jpg" 
+          alt="Mountain Biking"
+          className="w-[150%] md:w-[120%] lg:w-[110%] xl:w-[100%] h-full object-cover object-right mix-blend-darken origin-right translate-x-10 md:translate-x-18 lg:translate-x-[12%] xl:translate-x-[20%]"
+        />
+      </div>
+
+      <div className="relative z-10 flex flex-col lg:flex-row min-h-[600px] lg:min-h-[800px]">
         {/* Left Content Side */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center py-16 lg:py-24 px-6 lg:px-16 xl:px-24">
-          <div className="max-w-2xl w-full">
+        <div className="w-full lg:w-1/2 flex items-center py-16 lg:py-24 px-6 md:px-12 lg:pl-16 xl:pl-24 lg:pr-8 bg-white/90 lg:bg-transparent">
+          <div className="max-w-lg xl:max-w-xl w-full">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-5xl lg:text-[56px] font-bold text-gray-900 mb-6 leading-[1.1]"
+            >
+              Hardtail Mountain<br />
+              Bikes <span className="text-[#e1251b]">Best</span> Features.
+            </motion.h2>
+
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -90,13 +109,8 @@ export function BikeFeaturesInfo() {
           </div>
         </div>
 
-        {/* Right Image Side */}
-        <div className="w-full lg:w-1/2 min-h-[400px] lg:min-h-full relative">
-          <img 
-            src="/mountain-biker.jpg" 
-            alt="Mountain Biking"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        {/* Right Image Side (Empty container to take up space and hold DEMOS label) */}
+        <div className="hidden lg:block lg:w-1/2 relative">
           {/* DEMOS Label */}
           <div className="absolute right-0 bottom-24 bg-black px-4 py-8 hidden md:flex items-center justify-center">
             <span className="text-white text-xs font-bold uppercase tracking-[0.2em]" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
