@@ -57,7 +57,7 @@ export function FeaturedProducts() {
               className="group relative bg-white transition-all duration-300"
             >
               {/* Product Image Box */}
-              <div className="relative h-[250px] mb-4 flex items-center justify-center">
+              <div className="relative h-[250px] flex items-center justify-center">
                 <img 
                   src={product.images[0]} 
                   alt={product.name[locale as 'en' | 'ar']} 
@@ -66,7 +66,7 @@ export function FeaturedProducts() {
               </div>
               
               {/* Product Info */}
-              <div className="text-center px-4 mt-8 pb-4">
+              <div className="text-center px-4 mt-2 pb-4">
                 <h3 className="text-base font-semibold text-gray-800 mb-1">
                   {product.name[locale as 'en' | 'ar']}
                 </h3>
