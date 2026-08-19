@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/routing';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { Menu, X, Bike } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export function Navbar() {
   const t = useTranslations('nav');
@@ -43,13 +44,19 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 z-50">
-          <Bike className={cn("w-8 h-8", isScrolled ? "text-primary" : "text-primary dark:text-white")} />
+        <Link href="/" className="flex items-center gap-2 z-50" dir="ltr">
+          <Image 
+            src="/logo.png"
+            alt="Sahin Cycle Store Logo"
+            width={48}
+            height={48}
+            className="w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300"
+          />
           <span className={cn(
             "font-bold text-xl tracking-tight transition-colors",
-            isScrolled ? "text-gray-900 dark:text-white" : "text-gray-900 dark:text-white"
+            isScrolled ? "text-gray-900 dark:text-white" : "text-white"
           )}>
-            Sahin Cycle Store
+            Sahin <span className="text-[#e1251b]">Cycle</span> Store
           </span>
         </Link>
 
@@ -60,10 +67,10 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
+                'text-sm font-medium transition-colors hover:text-[#e1251b]',
                 pathname === link.href
-                  ? 'text-primary'
-                  : isScrolled ? 'text-gray-600 dark:text-gray-300' : 'text-gray-800 dark:text-gray-200'
+                  ? 'text-[#e1251b]'
+                  : isScrolled ? 'text-gray-600 dark:text-gray-300' : 'text-gray-200'
               )}
             >
               {link.label}
@@ -113,7 +120,7 @@ export function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   'block py-2 text-base font-medium',
-                  pathname === link.href ? 'text-primary' : 'text-gray-800 dark:text-gray-200'
+                  pathname === link.href ? 'text-[#e1251b]' : 'text-gray-800 dark:text-gray-200 hover:text-[#e1251b]'
                 )}
               >
                 {link.label}

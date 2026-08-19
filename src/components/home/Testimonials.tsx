@@ -43,7 +43,7 @@ export function Testimonials() {
                 className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 rtl:pr-4 rtl:pl-0"
               >
                 <div className="bg-gray-50 p-8 rounded-2xl shadow-sm border border-gray-100 h-full relative">
-                  <Quote className="absolute top-6 right-8 w-12 h-12 text-[#e1251b]/20" />
+                  <Quote className="absolute top-6 right-8 rtl:left-8 rtl:right-auto rtl:scale-x-[-1] w-12 h-12 text-[#e1251b]/20" />
                   <div className="flex gap-1 mb-6 relative z-10">
                     {[...Array(5)].map((_, i) => (
                       <Star 
@@ -61,7 +61,7 @@ export function Testimonials() {
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-900">{testimonial.name[locale as 'en' | 'ar']}</h4>
-                      <p className="text-sm text-gray-500">Verified Customer</p>
+                      <p className="text-sm text-gray-500">{t('verified')}</p>
                     </div>
                   </div>
                 </div>

@@ -3,32 +3,34 @@
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 import { Truck, ArchiveRestore, PhoneCall, CreditCard } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function ServicesPreview() {
+  const t = useTranslations('servicesPreview');
   const features = [
     {
       id: 'shipping',
       icon: Truck,
-      title: 'FREE SHIPPING',
-      description: 'Contrary to popular belief, lorem ipsum is not simply random.',
+      title: t('f1Title'),
+      description: t('f1Desc'),
     },
     {
       id: 'return',
       icon: ArchiveRestore,
-      title: 'EXCHANGE & RETURN',
-      description: 'This book is a treatise on the theory of ethics, very popular during.',
+      title: t('f2Title'),
+      description: t('f2Desc'),
     },
     {
       id: 'service',
       icon: PhoneCall,
-      title: 'CUSTOMER SERVICE',
-      description: 'Many desktop publishing packages and web page editors now.',
+      title: t('f3Title'),
+      description: t('f3Desc'),
     },
     {
       id: 'payments',
       icon: CreditCard,
-      title: 'INSTANT PAYMENTS',
-      description: 'Looked up one of the more obscure latin words, consectetur.',
+      title: t('f4Title'),
+      description: t('f4Desc'),
     }
   ];
 
@@ -56,7 +58,7 @@ export function ServicesPreview() {
                 href="/services" 
                 className="text-xs font-bold text-gray-700 tracking-wider uppercase border-b-2 border-[#9f2a2a] pb-1 hover:text-[#e1251b] hover:border-[#e1251b] transition-colors"
               >
-                VIEW MORE
+                {t('viewMore')}
               </Link>
             </motion.div>
           ))}

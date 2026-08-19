@@ -10,9 +10,13 @@ export function FeaturedProducts() {
   const t = useTranslations('featured');
   const commonT = useTranslations('common');
   const locale = useLocale();
-  const [activeTab, setActiveTab] = useState('NEW ARRIVALS');
+  const [activeTab, setActiveTab] = useState('new');
 
-  const tabs = ['NEW ARRIVALS', 'BESTSELLERS', 'MOST VIEWED'];
+  const tabs = [
+    { key: 'new', label: t('tabs.new') },
+    { key: 'best', label: t('tabs.best') },
+    { key: 'viewed', label: t('tabs.viewed') }
+  ];
 
   const featured = products.filter(p => p.featured);
 
@@ -22,24 +26,24 @@ export function FeaturedProducts() {
         {/* Title Section */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Our Products
+            {t('title')}
           </h2>
           <p className="text-gray-500 mb-10 text-base">
-            Many desktop publishing packages and web page.
+            {t('subtitle')}
           </p>
           
           <div className="flex justify-center items-center gap-8">
             {tabs.map((tab) => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
                 className={`pb-1 text-sm font-bold tracking-wide uppercase transition-colors border-b-2 ${
-                  activeTab === tab 
+                  activeTab === tab.key 
                     ? 'text-gray-800 border-[#9f2a2a]' 
                     : 'text-gray-500 hover:text-gray-800 border-transparent'
                 }`}
               >
-                {tab}
+                {tab.label}
               </button>
             ))}
           </div>
@@ -71,7 +75,7 @@ export function FeaturedProducts() {
                   {product.name[locale as 'en' | 'ar']}
                 </h3>
                 <p className="text-sm text-gray-400 mb-2">
-                  Bikes
+                  {t('category')}
                 </p>
                 <p className="text-base font-bold text-[#e1251b]">
                   {commonT('currency')} {product.price}.00

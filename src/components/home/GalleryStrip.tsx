@@ -16,7 +16,7 @@ export function GalleryStrip() {
 
   return (
     <section className="py-12 relative overflow-hidden group bg-white">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4" dir="ltr">
         {/* Top Row - Right to Left */}
         <div className="relative z-10 flex w-[200vw] sm:w-[150vw] lg:w-[120vw]">
           <motion.div 

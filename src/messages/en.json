@@ -21,6 +21,83 @@
     "ctaPrimary": "Browse Products",
     "ctaSecondary": "WhatsApp Us"
   },
+  "heroSlider": {
+    "slide1": {
+      "title1": "Professional",
+      "title2": "Bicycle",
+      "title3": " Servicing.",
+      "desc": "Keep your ride in perfect condition. Our expert mechanics provide comprehensive repair, maintenance, and tuning services for all types of bicycles.",
+      "btn1": "BOOK SERVICE",
+      "btn2": "LEARN MORE"
+    },
+    "slide2": {
+      "title1": "Carbon Roadster",
+      "title2": "Racing",
+      "title3": " Bike.",
+      "desc": "Sleek carbon fiber road racing bike. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+      "btn1": "VIEW MORE",
+      "btn2": "SHOP NOW"
+    },
+    "slide3": {
+      "title1": "Kids BMX",
+      "title2": "Star",
+      "title3": " Bike.",
+      "desc": "Safe and durable BMX bike for kids aged 7-12. Experience the joy of riding with maximum safety.",
+      "btn1": "VIEW MORE",
+      "btn2": "SHOP NOW"
+    }
+  },
+  "categoryCards": {
+    "cat1": "Mountain Bike\nExtreme Driving.",
+    "cat2": "Bikes For\nProfessional.",
+    "cat3": "Long Ride\nOn a Road Bike.",
+    "viewMore": "VIEW MORE"
+  },
+  "promo": {
+    "title1": "Nothing\nCan",
+    "title2": " Stop",
+    "title3": " You.",
+    "desc": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less.",
+    "f1Title": "Made in Germany.",
+    "f1Desc": "High quality engineering and design standards.",
+    "f2Title": "Durable Frames.",
+    "f2Desc": "Built to withstand the toughest conditions.",
+    "f3Title": "Easy Operation.",
+    "f3Desc": "Intuitive shifting and braking systems.",
+    "f4Title": "Lifetime Warranty.",
+    "f4Desc": "Guaranteed quality for peace of mind.",
+    "viewMore": "VIEW MORE",
+    "shopNow": "SHOP NOW",
+    "demos": "DEMOS"
+  },
+  "servicesPreview": {
+    "f1Title": "FREE SHIPPING",
+    "f1Desc": "Contrary to popular belief, lorem ipsum is not simply random.",
+    "f2Title": "EXCHANGE & RETURN",
+    "f2Desc": "This book is a treatise on the theory of ethics, very popular during.",
+    "f3Title": "CUSTOMER SERVICE",
+    "f3Desc": "Many desktop publishing packages and web page editors now.",
+    "f4Title": "INSTANT PAYMENTS",
+    "f4Desc": "Looked up one of the more obscure latin words, consectetur.",
+    "viewMore": "VIEW MORE"
+  },
+  "bikeFeatures": {
+    "title1": "Hardtail Mountain\nBikes",
+    "title2": " Best",
+    "title3": " Features.",
+    "desc": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+    "f1Title": "Bike Frame.",
+    "f1Desc": "It is a long established fact that a reader will be distracted by the readable content of.",
+    "f2Title": "Bike Computer.",
+    "f2Desc": "The point of using lorem ipsum is that it has a more-or-less normal distribution of letters.",
+    "f3Title": "Transmission.",
+    "f3Desc": "Many desktop publishing packages and web page editors now use lorem ipsum as their.",
+    "f4Title": "Equipment.",
+    "f4Desc": "Contrary to popular belief, lorem ipsum is not simply random text. It has roots in.",
+    "viewMore": "VIEW MORE",
+    "watchVideo": "WATCH VIDEO",
+    "demos": "DEMOS"
+  },
   "categories": {
     "title": "Shop by Category",
     "new": "New Bicycles",
@@ -31,8 +108,15 @@
     "accessories": "Accessories"
   },
   "featured": {
-    "title": "Featured Products",
-    "viewAll": "View All Products"
+    "title": "Our Products",
+    "subtitle": "Many desktop publishing packages and web page.",
+    "viewAll": "View All Products",
+    "tabs": {
+      "new": "NEW ARRIVALS",
+      "best": "BESTSELLERS",
+      "viewed": "MOST VIEWED"
+    },
+    "category": "Bikes"
   },
   "services": {
     "title": "Mechanical Services",
@@ -43,14 +127,28 @@
     "viewAll": "View All Services"
   },
   "whyUs": {
-    "title": "Why Choose Us",
+    "title1": "Why ",
+    "title2": "Sahin Cycle Store?",
+    "desc": "We are passionate about providing high-quality bicycles and professional repair services.",
     "exp": "10+ Years Experience",
     "customers": "500+ Happy Customers",
     "brands": "All Brands Serviced",
     "speed": "Same-Day Repair"
   },
+  "footer": {
+    "title1": "Find Us",
+    "title2": "Store.",
+    "location": "Our Location",
+    "address": "Arar, Northern Borders KSA",
+    "hours": "Saturday-Thursday 9:00-21:00",
+    "info": "More Information",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "Your email address",
+    "signUp": "Sign Up"
+  },
   "testimonials": {
-    "title": "What Our Customers Say"
+    "title": "What Our Customers Say",
+    "verified": "Verified Customer"
   },
   "faq": {
     "title": "Frequently Asked Questions"

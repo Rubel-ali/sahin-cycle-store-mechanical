@@ -7,6 +7,7 @@ import { Link } from '@/i18n/routing';
 
 export function WhyChooseUs() {
   const t = useTranslations('whyUs');
+  const commonT = useTranslations('common');
 
   const features = [
     { icon: Award, text: t('exp') },
@@ -22,7 +23,7 @@ export function WhyChooseUs() {
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-24 max-w-6xl mx-auto">
 
           {/* Left side: Blob Image */}
-          <div className="flex-1 lg:flex-[1.2] w-full flex justify-center lg:justify-start relative lg:-ml-12">
+          <div className="flex-1 lg:flex-[1.2] w-full flex justify-center lg:justify-start rtl:lg:justify-end relative lg:-ml-12 rtl:lg:-mr-12 rtl:lg:ml-0">
             {/* The yellow blob background shadow */}
             <div
               className="absolute w-[80%] h-[100%] bg-[#ffed4a] z-0 translate-x-8 translate-y-4"
@@ -44,10 +45,10 @@ export function WhyChooseUs() {
           {/* Right side: Text and Button */}
           <div className="flex-1 w-full">
             <h2 className="text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-normal text-gray-800 mb-6 lg:whitespace-nowrap">
-              Why <span className="font-bold text-gray-900">Sahin Cycle Store?</span>
+              {t('title1')} <span className="font-bold text-gray-900">{t('title2')}</span>
             </h2>
             <p className="text-gray-600 leading-relaxed mb-8 text-lg max-w-lg">
-              We are passionate about providing high-quality bicycles and professional repair services.
+              {t('desc')}
             </p>
             {/* Bottom Section: Features Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">

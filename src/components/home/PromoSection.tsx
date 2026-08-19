@@ -2,13 +2,17 @@
 
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
+import { useTranslations, useLocale } from 'next-intl';
 
 export function PromoSection() {
+  const t = useTranslations('promo');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
   const features = [
-    { num: '1.', title: 'Made in Germany.', desc: 'High quality engineering and design standards.' },
-    { num: '2.', title: 'Durable Frames.', desc: 'Built to withstand the toughest conditions.' },
-    { num: '3.', title: 'Easy Operation.', desc: 'Intuitive shifting and braking systems.' },
-    { num: '4.', title: 'Lifetime Warranty.', desc: 'Guaranteed quality for peace of mind.' },
+    { num: '1.', title: t('f1Title'), desc: t('f1Desc') },
+    { num: '2.', title: t('f2Title'), desc: t('f2Desc') },
+    { num: '3.', title: t('f3Title'), desc: t('f3Desc') },
+    { num: '4.', title: t('f4Title'), desc: t('f4Desc') },
   ];
 
   return (
@@ -36,10 +40,11 @@ export function PromoSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 whitespace-pre-line"
+              dir={isRtl ? 'rtl' : 'ltr'}
             >
-              Nothing <br />
-              Can <span className="text-[#e1251b]">Stop</span> You.
+              {t('title1')} <br />
+              {t('title2')} <span className="text-[#e1251b]">{isRtl ? 'لا شيء' : 'Stop'}</span>{t('title3')}
             </motion.h2>
             
             <motion.p 
@@ -48,8 +53,9 @@ export function PromoSection() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="text-base text-gray-400 mb-8 max-w-md leading-relaxed"
+              dir={isRtl ? 'rtl' : 'ltr'}
             >
-              It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less.
+              {t('desc')}
             </motion.p>
 
             <motion.div 
@@ -63,13 +69,13 @@ export function PromoSection() {
                 href="/products" 
                 className="px-8 py-3 bg-[#e1251b] hover:bg-red-700 text-white text-sm font-semibold tracking-wider uppercase transition-colors"
               >
-                VIEW MORE
+                {t('viewMore')}
               </Link>
               <Link 
                 href="/products" 
                 className="px-8 py-3 bg-transparent border border-white hover:bg-white hover:text-black text-white text-sm font-semibold tracking-wider uppercase transition-all"
               >
-                SHOP NOW
+                {t('shopNow')}
               </Link>
             </motion.div>
 
@@ -114,7 +120,7 @@ export function PromoSection() {
             
             {/* Demos vertical tab (matches original screenshot style) */}
             <div className="absolute -right-4 md:-right-8 top-1/2 -translate-y-1/2 bg-black px-2 py-8 hidden lg:flex items-center justify-center border-l border-white/10">
-              <span className="text-white text-xs font-bold uppercase tracking-[0.2em] rotate-90 whitespace-nowrap">DEMOS</span>
+              <span className="text-white text-xs font-bold uppercase tracking-[0.2em] rotate-90 whitespace-nowrap">{t('demos')}</span>
             </div>
           </div>
 

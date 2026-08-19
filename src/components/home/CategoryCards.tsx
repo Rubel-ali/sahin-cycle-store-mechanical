@@ -3,28 +3,33 @@
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 
-const categories = [
-  {
-    id: 1,
-    title: 'Mountain Bike\nExtreme Driving.',
-    image: '/categories/bike-1.jpg',
-    link: '/products',
-  },
-  {
-    id: 2,
-    title: 'Bikes For\nProfessional.',
-    image: '/categories/bike-2.jpg',
-    link: '/products',
-  },
-  {
-    id: 3,
-    title: 'Long Ride\nOn a Road Bike.',
-    image: '/categories/bike-3.jpg',
-    link: '/products',
-  }
-];
+import { useTranslations, useLocale } from 'next-intl';
 
 export function CategoryCards() {
+  const t = useTranslations('categoryCards');
+  const locale = useLocale();
+
+  const categories = [
+    {
+      id: 1,
+      title: t('cat1'),
+      image: '/categories/bike-1.jpg',
+      link: '/products',
+    },
+    {
+      id: 2,
+      title: t('cat2'),
+      image: '/categories/bike-2.jpg',
+      link: '/products',
+    },
+    {
+      id: 3,
+      title: t('cat3'),
+      image: '/categories/bike-3.jpg',
+      link: '/products',
+    }
+  ];
+
   return (
     <div className="w-full bg-white relative flex flex-col">
       <section className="relative z-20 -mt-8 md:-mt-16 mb-16 px-4 lg:px-0 w-full max-w-7xl mx-auto bg-black">
@@ -49,14 +54,14 @@ export function CategoryCards() {
 
             {/* Content */}
             <div className="absolute inset-0 p-8 lg:p-12 flex flex-col justify-end">
-              <h3 className="text-white text-2xl lg:text-3xl font-bold leading-tight mb-6 whitespace-pre-line">
+              <h3 className="text-white text-2xl lg:text-3xl font-bold leading-tight mb-6 whitespace-pre-line" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
                 {cat.title}
               </h3>
               <Link
                 href={cat.link}
                 className="text-white text-xs font-bold tracking-wider relative w-max pb-1 overflow-hidden"
               >
-                VIEW MORE
+                {t('viewMore')}
                 <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
                 <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white opacity-30" />
               </Link>
