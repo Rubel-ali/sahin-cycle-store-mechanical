@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Award, Users, ShieldCheck, Zap } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 
-export function WhyChooseUs() {
+export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
   const t = useTranslations('whyUs');
   const commonT = useTranslations('common');
 
@@ -82,19 +82,21 @@ export function WhyChooseUs() {
             </div>
 
             {/* Action Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <Link 
-                href="/about" 
-                className="inline-flex items-center justify-center px-8 py-3.5 bg-[#1a1a1a] hover:bg-[#e1251b] text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+            {showButton && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
               >
-                {commonT('readMore')}
-              </Link>
-            </motion.div>
+                <Link 
+                  href="/about" 
+                  className="inline-flex items-center justify-center px-8 py-3.5 bg-[#1a1a1a] hover:bg-[#e1251b] text-white font-medium rounded-lg transition-colors shadow-md hover:shadow-lg"
+                >
+                  {commonT('readMore')}
+                </Link>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>

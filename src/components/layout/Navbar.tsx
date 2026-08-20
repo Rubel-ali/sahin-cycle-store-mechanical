@@ -38,8 +38,8 @@ export function Navbar() {
       className={cn(
         'fixed top-0 w-full z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-[#111827]/95 backdrop-blur-md shadow-md py-3'
+          : 'bg-[#111827] py-5'
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
@@ -52,10 +52,7 @@ export function Navbar() {
             height={48}
             className="w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300"
           />
-          <span className={cn(
-            "font-bold text-xl tracking-tight transition-colors",
-            isScrolled ? "text-gray-900 dark:text-white" : "text-white"
-          )}>
+          <span className="font-bold text-xl tracking-tight transition-colors text-white">
             Sahin <span className="text-[#e1251b]">Cycle</span> Store
           </span>
         </Link>
@@ -70,7 +67,7 @@ export function Navbar() {
                 'text-sm font-medium transition-colors hover:text-[#e1251b]',
                 pathname === link.href
                   ? 'text-[#e1251b]'
-                  : isScrolled ? 'text-gray-600 dark:text-gray-300' : 'text-gray-200'
+                  : 'text-gray-200'
               )}
             >
               {link.label}
@@ -85,7 +82,7 @@ export function Navbar() {
             href="https://wa.me/966000000000"
             target="_blank"
             rel="noreferrer"
-            className="px-4 py-2 bg-accent text-white rounded-md text-sm font-medium hover:bg-amber-600 transition-colors"
+            className="px-4 py-2 bg-[#e1251b] text-white rounded-md text-sm font-medium hover:bg-[#c11f16] transition-colors"
           >
             {commonT('whatsappUs')}
           </a>
@@ -111,7 +108,7 @@ export function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-lg border-t dark:border-gray-800 md:hidden flex flex-col p-4 gap-4"
+            className="absolute top-full left-0 w-full bg-[#111827] shadow-lg border-t border-gray-800 md:hidden flex flex-col p-4 gap-4"
           >
             {navLinks.map((link) => (
               <Link
@@ -120,7 +117,7 @@ export function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={cn(
                   'block py-2 text-base font-medium',
-                  pathname === link.href ? 'text-[#e1251b]' : 'text-gray-800 dark:text-gray-200 hover:text-[#e1251b]'
+                  pathname === link.href ? 'text-[#e1251b]' : 'text-gray-200 hover:text-[#e1251b]'
                 )}
               >
                 {link.label}
@@ -130,7 +127,7 @@ export function Navbar() {
               href="https://wa.me/966000000000"
               target="_blank"
               rel="noreferrer"
-              className="mt-2 block text-center px-4 py-3 bg-accent text-white rounded-md text-base font-medium"
+              className="mt-2 block text-center px-4 py-3 bg-[#e1251b] text-white rounded-md text-base font-medium hover:bg-[#c11f16] transition-colors"
             >
               {commonT('whatsappUs')}
             </a>

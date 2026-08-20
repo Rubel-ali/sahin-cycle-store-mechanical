@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Heart, Search, ArrowRightLeft } from 'lucide-react';
 import { useState } from 'react';
 
-export function FeaturedProducts() {
+export function FeaturedProducts({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
   const t = useTranslations('featured');
   const commonT = useTranslations('common');
   const locale = useLocale();
@@ -38,7 +38,7 @@ export function FeaturedProducts() {
   const displayedProducts = getFilteredProducts();
 
   return (
-    <section className="py-20 bg-white">
+    <section className={`bg-white ${removeTopPadding ? 'pt-8 pb-20' : 'py-20'}`}>
       <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         {/* Title Section */}
         <div className="text-center mb-12">

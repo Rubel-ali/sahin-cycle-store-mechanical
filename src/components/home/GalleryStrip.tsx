@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 
-export function GalleryStrip() {
+export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
   const commonT = useTranslations('common');
 
   const topImages = [
@@ -67,14 +67,16 @@ export function GalleryStrip() {
         </div>
       </div>
       
-      <div className="text-center mt-12 relative z-10">
-        <Link 
-          href="/gallery" 
-          className="inline-block px-8 py-3 bg-black/5 backdrop-blur-sm border border-black/10 hover:bg-[#e1251b] hover:border-[#e1251b] hover:text-white text-gray-900 font-medium rounded-lg transition-colors shadow-sm"
-        >
-          {commonT('viewAll')}
-        </Link>
-      </div>
+      {showButton && (
+        <div className="text-center mt-12 relative z-10">
+          <Link 
+            href="/gallery" 
+            className="inline-block px-8 py-3 bg-black/5 backdrop-blur-sm border border-black/10 hover:bg-[#e1251b] hover:border-[#e1251b] hover:text-white text-gray-900 font-medium rounded-lg transition-colors shadow-sm"
+          >
+            {commonT('viewAll')}
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

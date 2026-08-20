@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Truck, ArchiveRestore, PhoneCall, CreditCard } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-export function ServicesPreview() {
+export function ServicesPreview({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
   const t = useTranslations('servicesPreview');
   const features = [
     {
@@ -35,7 +35,7 @@ export function ServicesPreview() {
   ];
 
   return (
-    <section className="py-24 bg-white">
+    <section className={`bg-white ${removeTopPadding ? 'pt-8 pb-24' : 'py-24'}`}>
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (

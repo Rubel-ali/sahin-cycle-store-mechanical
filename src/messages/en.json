@@ -157,5 +157,21 @@
     "title": "Ready to get your bike fixed?",
     "subtitle": "Send us a message on WhatsApp and we will get back to you immediately.",
     "button": "Chat on WhatsApp"
+  },
+  "contactPage": {
+    "subtitle": "Get in touch with us for any inquiries, quotes, or support. We are here to help.",
+    "infoTitle": "Contact Information",
+    "infoDesc": "Whether you have a question about our services, products, or need technical support, our team is ready to answer all your questions.",
+    "phoneTitle": "Phone Number",
+    "emailTitle": "Email Address",
+    "hoursTitle": "Business Hours",
+    "formTitle": "Send Us a Message",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "message": "Message",
+    "sendBtn": "Send Message",
+    "placeholderFirstName": "John",
+    "placeholderLastName": "Doe",
+    "placeholderMessage": "How can we help you?"
   }
 }

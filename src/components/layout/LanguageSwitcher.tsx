@@ -24,7 +24,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       onClick={toggleLocale}
       disabled={isPending}
       className={cn(
-        "flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50",
+        "flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors text-gray-200 hover:text-white hover:bg-white/10 disabled:opacity-50",
         className
       )}
       aria-label="Toggle language"

@@ -10,21 +10,14 @@
   --color-error: #EF4444;
   --color-success: #22C55E;
 
-  --color-background: var(--color-light);
+  --color-background: var(--color-white);
   --color-foreground: var(--color-dark);
   
   --font-sans: var(--font-inter), var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  @theme inline {
-    --color-background: var(--color-dark);
-    --color-foreground: var(--color-light);
-  }
-}
-
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 }
 
 body {

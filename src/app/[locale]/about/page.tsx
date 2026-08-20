@@ -1,21 +1,32 @@
 import { useTranslations } from 'next-intl';
+import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 
 export default function AboutPage() {
   const t = useTranslations('nav');
+  const tAbout = useTranslations('whyUs');
 
   return (
-    <div className="pt-32 pb-16 min-h-screen">
-      <div className="container mx-auto px-4 md:px-6">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-          {t('about')}
-        </h1>
-        <div className="prose dark:prose-invert max-w-none">
-          <p className="text-lg text-gray-600 dark:text-gray-300">
-            Welcome to Sahin Cycle Store. We are dedicated to providing the best bicycles and mechanical services in Arar.
+    <div className="flex flex-col flex-1 bg-white">
+      {/* Page Header */}
+      <div className="bg-[#1a1a1a] py-20 relative overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: "url('/why-us-bike.png')" }}
+          />
+        </div>
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            {t('about')}
+          </h1>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            {tAbout('desc')}
           </p>
-          {/* Add more content here */}
         </div>
       </div>
+
+      {/* Main Content Sections */}
+      <WhyChooseUs showButton={false} />
     </div>
   );
 }
