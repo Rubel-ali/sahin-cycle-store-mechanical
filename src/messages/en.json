@@ -173,5 +173,8 @@
     "placeholderFirstName": "John",
     "placeholderLastName": "Doe",
     "placeholderMessage": "How can we help you?"
+  },
+  "galleryPage": {
+    "subtitle": "Take a look at our store, products, and happy customers."
   }
 }

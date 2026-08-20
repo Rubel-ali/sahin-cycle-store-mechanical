@@ -173,5 +173,8 @@
     "placeholderFirstName": "أحمد",
     "placeholderLastName": "محمد",
     "placeholderMessage": "كيف يمكننا مساعدتك؟"
+  },
+  "galleryPage": {
+    "subtitle": "ألق نظرة على متجرنا ومنتجاتنا وعملائنا السعداء."
   }
 }
