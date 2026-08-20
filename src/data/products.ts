@@ -114,5 +114,81 @@ export const products: Product[] = [
     },
     featured: true,
     inStock: true
+  },
+  {
+    id: '7',
+    slug: 'trail-blazer-pro',
+    name: {
+      en: 'Trail Blazer Pro',
+      ar: 'تريل بليزر برو'
+    },
+    category: 'new',
+    condition: 'new',
+    price: 1850,
+    currency: 'SAR',
+    images: ['/products/trail-blazer-pro.jpg'],
+    description: {
+      en: 'Robust trail bike built for extreme conditions.',
+      ar: 'دراجة مسارات قوية مصممة للظروف القاسية.'
+    },
+    featured: true,
+    inStock: true
+  },
+  {
+    id: '8',
+    slug: 'speed-phantom-v3',
+    name: {
+      en: 'Speed Phantom V3',
+      ar: 'سبيد فانتوم في 3'
+    },
+    category: 'used',
+    condition: 'used',
+    price: 890,
+    currency: 'SAR',
+    images: ['/products/speed-phantom-v3.jpg'],
+    description: {
+      en: 'Lightweight road bike for maximum speed.',
+      ar: 'دراجة طريق خفيفة الوزن لأقصى سرعة.'
+    },
+    featured: true,
+    inStock: true
+  },
+  {
+    id: '9',
+    slug: 'forge-gravel-pro',
+    name: {
+      en: 'Forge Gravel Pro',
+      ar: 'فورج جرافيل برو'
+    },
+    category: 'new',
+    condition: 'new',
+    price: 2100,
+    currency: 'SAR',
+    images: ['/products/gravel-bike.jpg'],
+    description: {
+      en: 'Versatile gravel bike for both road and off-road adventures.',
+      ar: 'دراجة حصى متعددة الاستخدامات لمغامرات الطرق الوعرة والممهدة.'
+    },
+    featured: true,
+    inStock: true
+  },
+  {
+    id: '10',
+    slug: 'norco-fat-tire-max',
+    name: {
+      en: 'Norco Fat Tire Max',
+      ar: 'نوركو فات تاير ماكس'
+    },
+    category: 'new',
+    condition: 'new',
+    price: 1950,
+    currency: 'SAR',
+    images: ['/products/fat-tire-bike.jpg'],
+    description: {
+      en: 'Rugged fat tire bike for snow, sand, and mud.',
+      ar: 'دراجة ذات إطارات عريضة للثلج والرمل والطين.'
+    },
+    featured: true,
+    inStock: true
   }
 ];

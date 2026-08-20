@@ -38,18 +38,18 @@ export function BikeFeaturesInfo() {
 
   return (
     <section className="relative w-full overflow-hidden bg-white">
-      {/* Background Image overlapping with darken blend mode to make white transparent */}
-      <div className="absolute inset-0 flex justify-end pointer-events-none overflow-hidden" dir="ltr">
+      {/* Background Image overlapping with darken blend mode to make white transparent - Desktop Only */}
+      <div className="hidden lg:flex absolute inset-0 justify-end pointer-events-none overflow-hidden" dir="ltr">
         <img 
           src="/biker-overlapping.jpg" 
           alt="Mountain Biking"
-          className="w-[150%] md:w-[120%] lg:w-[110%] xl:w-[100%] h-full object-cover object-right mix-blend-darken origin-right scale-95 lg:scale-[0.90] xl:scale-[0.95] translate-x-[10%] lg:translate-x-[15%] xl:translate-x-[20%]"
+          className="lg:w-[110%] xl:w-[100%] h-full object-cover object-right mix-blend-darken origin-right lg:scale-[0.90] xl:scale-[0.95] lg:translate-x-[15%] xl:translate-x-[20%]"
         />
       </div>
 
       <div className={`relative z-10 flex flex-col lg:flex-row min-h-[600px] lg:min-h-[800px] ${isRtl ? 'lg:flex-row-reverse' : ''}`}>
         {/* Left Content Side */}
-        <div className="w-full lg:w-1/2 flex items-center rtl:justify-end py-16 lg:py-24 px-6 md:px-12 lg:pl-16 xl:pl-24 lg:pr-8 bg-white/90 lg:bg-transparent">
+        <div className="w-full lg:w-1/2 flex items-center rtl:justify-end py-16 lg:py-24 px-6 md:px-12 lg:pl-16 xl:pl-24 lg:pr-8 bg-white lg:bg-transparent relative z-20">
           <div className="max-w-lg xl:max-w-xl w-full">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -112,10 +112,19 @@ export function BikeFeaturesInfo() {
           </div>
         </div>
 
-        {/* Right Image Side (Empty container to take up space and hold DEMOS label) */}
-        <div className="hidden lg:block lg:w-1/2 relative">
+        {/* Right Image Side (Empty container on desktop to take up space and hold DEMOS label, actual image on mobile) */}
+        <div className="w-full lg:w-1/2 relative min-h-[400px] lg:min-h-0 flex-grow">
+          {/* Mobile Image */}
+          <div className="absolute inset-0 lg:hidden" dir="ltr">
+            <img 
+              src="/biker-overlapping.jpg" 
+              alt="Mountain Biking"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+
           {/* DEMOS Label */}
-          <div className="absolute right-0 bottom-24 bg-black px-4 py-8 hidden md:flex items-center justify-center">
+          <div className="absolute right-0 bottom-24 bg-black px-4 py-8 hidden md:flex items-center justify-center z-10">
             <span className="text-white text-xs font-bold uppercase tracking-[0.2em]" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
               {t('demos')}
             </span>

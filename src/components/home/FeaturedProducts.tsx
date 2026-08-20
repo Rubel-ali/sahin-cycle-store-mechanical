@@ -18,7 +18,24 @@ export function FeaturedProducts() {
     { key: 'viewed', label: t('tabs.viewed') }
   ];
 
-  const featured = products.filter(p => p.featured);
+  const getFilteredProducts = () => {
+    let list = products.filter(p => p.featured);
+    
+    if (activeTab === 'new') {
+      // New Arrivals: show products with condition 'new'
+      list = list.filter(p => p.condition === 'new');
+    } else if (activeTab === 'best') {
+      // Bestsellers: show high-end/popular items (simulated with price >= 1000)
+      list = list.filter(p => p.price >= 1000);
+    } else if (activeTab === 'viewed') {
+      // Most Viewed: show affordable/frequently viewed items (simulated with price < 1000)
+      list = list.filter(p => p.price < 1000);
+    }
+    
+    return list;
+  };
+
+  const displayedProducts = getFilteredProducts();
 
   return (
     <section className="py-20 bg-white">
@@ -50,13 +67,12 @@ export function FeaturedProducts() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {featured.map((product, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
+          {displayedProducts.slice(0, 8).map((product, index) => (
             <motion.div
-              key={product.id}
+              key={`${product.id}-${activeTab}`} // Ensure animation triggers on tab change
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               className="group relative bg-white transition-all duration-300"
             >

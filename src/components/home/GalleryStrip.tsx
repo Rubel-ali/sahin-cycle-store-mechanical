@@ -7,11 +7,20 @@ import { motion } from 'framer-motion';
 export function GalleryStrip() {
   const commonT = useTranslations('common');
 
-  const images = [
+  const topImages = [
     '/gallery/gallery-1.png',
     '/gallery/gallery-2.png',
     '/gallery/gallery-3.png',
     '/gallery/gallery-4.png',
+  ];
+
+  const bottomImages = [
+    '/categories/bike-1.jpg',
+    '/categories/bike-2.jpg',
+    '/categories/bike-3.jpg',
+    '/categories/bike-4.jpg',
+    '/mountain-biker.jpg',
+    '/kids_bike_bg.jpg',
   ];
 
   return (
@@ -24,8 +33,8 @@ export function GalleryStrip() {
             transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
             className="flex gap-4 px-2 whitespace-nowrap min-w-full"
           >
-            {[...images, ...images].map((src, index) => (
-              <div key={index} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100">
+            {[...topImages, ...topImages].map((src, index) => (
+              <div key={`top-${index}`} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100 bg-gray-50">
                 <img 
                   src={src} 
                   alt="Store Gallery" 
@@ -44,8 +53,8 @@ export function GalleryStrip() {
             transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
             className="flex gap-4 px-2 whitespace-nowrap min-w-full"
           >
-            {[...images.slice().reverse(), ...images.slice().reverse()].map((src, index) => (
-              <div key={`bottom-${index}`} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100">
+            {[...bottomImages, ...bottomImages].map((src, index) => (
+              <div key={`bottom-${index}`} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100 bg-gray-50">
                 <img 
                   src={src} 
                   alt="Store Gallery" 
