@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Bike, Activity, Settings, Shield } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import Image from 'next/image';
 
 export function BikeFeaturesInfo() {
   const locale = useLocale();
@@ -40,11 +41,15 @@ export function BikeFeaturesInfo() {
     <section className="relative w-full overflow-hidden bg-white">
       {/* Background Image overlapping with darken blend mode to make white transparent - Desktop Only */}
       <div className="hidden lg:flex absolute inset-0 justify-end pointer-events-none overflow-hidden" dir="ltr">
-        <img 
-          src="/biker-overlapping.jpg" 
-          alt="Mountain Biking"
-          className="lg:w-[110%] xl:w-[100%] h-full object-cover object-right mix-blend-darken origin-right lg:scale-[0.90] xl:scale-[0.95] lg:translate-x-[15%] xl:translate-x-[20%]"
-        />
+        <div className="relative h-full w-full lg:w-[110%] xl:w-[100%]">
+          <Image 
+            src="/biker-overlapping.jpg" 
+            alt="Mountain Biking"
+            fill
+            sizes="50vw"
+            className="object-cover object-right mix-blend-darken origin-right lg:scale-[0.90] xl:scale-[0.95] lg:translate-x-[15%] xl:translate-x-[20%]"
+          />
+        </div>
       </div>
 
       <div className={`relative z-10 flex flex-col lg:flex-row min-h-[600px] lg:min-h-[800px] ${isRtl ? 'lg:flex-row-reverse' : ''}`}>
@@ -116,10 +121,12 @@ export function BikeFeaturesInfo() {
         <div className="w-full lg:w-1/2 relative min-h-[400px] lg:min-h-0 flex-grow">
           {/* Mobile Image */}
           <div className="absolute inset-0 lg:hidden" dir="ltr">
-            <img 
+            <Image 
               src="/biker-overlapping.jpg" 
               alt="Mountain Biking"
-              className="w-full h-full object-cover object-center"
+              fill
+              sizes="(max-width: 1024px) 100vw, 0vw"
+              className="object-cover object-center"
             />
           </div>
 

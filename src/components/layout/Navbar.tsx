@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/routing';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Menu, X } from 'lucide-react';
@@ -12,6 +12,8 @@ import Image from 'next/image';
 export function Navbar() {
   const t = useTranslations('nav');
   const commonT = useTranslations('common');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -44,7 +46,7 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 z-50" dir="ltr">
+        <Link href="/" className="flex items-center gap-2 z-50">
           <Image 
             src="/logo.png"
             alt="Sahin Cycle Store Logo"
@@ -53,7 +55,11 @@ export function Navbar() {
             className="w-10 h-10 md:w-12 md:h-12 object-contain transition-all duration-300"
           />
           <span className="font-bold text-xl tracking-tight transition-colors text-white">
-            Sahin <span className="text-[#e1251b]">Cycle</span> Store
+            {isRtl ? (
+              <>متجر دراجات <span className="text-[#e1251b]">شاهين</span></>
+            ) : (
+              <>Sahin <span className="text-[#e1251b]">Cycle</span> Store</>
+            )}
           </span>
         </Link>
 

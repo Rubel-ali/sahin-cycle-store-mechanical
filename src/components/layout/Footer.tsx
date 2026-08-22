@@ -36,7 +36,11 @@ export function Footer() {
           <div className="flex flex-col" dir={isRtl ? 'rtl' : 'ltr'}>
             <h2 className="text-4xl leading-tight font-medium text-gray-700 mb-1">{t('title1')}</h2>
             <h2 className="text-4xl leading-tight font-semibold text-gray-900">
-              <span className="text-[#e1251b]">Sahin</span> Cycles
+              {isRtl ? (
+                <>دراجات <span className="text-[#e1251b]">شاهين</span></>
+              ) : (
+                <><span className="text-[#e1251b]">Sahin</span> Cycles</>
+              )}
             </h2>
             <h2 className="text-4xl leading-tight font-medium text-gray-700 mb-6">{t('title2')}</h2>
             

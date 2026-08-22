@@ -5,6 +5,7 @@ import { products } from '@/data/products';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Heart, Search, ArrowRightLeft } from 'lucide-react';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export function FeaturedProducts({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
   const t = useTranslations('featured');
@@ -77,11 +78,13 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
               className="group relative bg-white transition-all duration-300"
             >
               {/* Product Image Box */}
-              <div className="relative h-[250px] flex items-center justify-center">
-                <img 
+              <div className="relative h-[250px] w-full flex items-center justify-center">
+                <Image 
                   src={product.images[0]} 
                   alt={product.name[locale as 'en' | 'ar']} 
-                  className="max-w-full max-h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                  className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               

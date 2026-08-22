@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
   const commonT = useTranslations('common');
@@ -35,10 +36,12 @@ export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
           >
             {[...topImages, ...topImages].map((src, index) => (
               <div key={`top-${index}`} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100 bg-gray-50">
-                <img 
+                <Image 
                   src={src} 
                   alt="Store Gallery" 
-                  className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-700"
+                  fill
+                  sizes="(max-width: 768px) 256px, 320px"
+                  className="object-cover group-hover/item:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover/item:bg-black/0 transition-colors duration-500" />
               </div>
@@ -55,10 +58,12 @@ export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
           >
             {[...bottomImages, ...bottomImages].map((src, index) => (
               <div key={`bottom-${index}`} className="relative w-64 h-64 md:w-80 md:h-80 flex-shrink-0 rounded-xl overflow-hidden group/item border border-gray-100 bg-gray-50">
-                <img 
+                <Image 
                   src={src} 
                   alt="Store Gallery" 
-                  className="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-700"
+                  fill
+                  sizes="(max-width: 768px) 256px, 320px"
+                  className="object-cover group-hover/item:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover/item:bg-black/0 transition-colors duration-500" />
               </div>

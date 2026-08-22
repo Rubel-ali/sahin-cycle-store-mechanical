@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Award, Users, ShieldCheck, Zap } from 'lucide-react';
 import { Link } from '@/i18n/routing';
+import Image from 'next/image';
 
 export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
   const t = useTranslations('whyUs');
@@ -34,10 +35,12 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
               className="relative z-10 w-[100%] max-w-[650px] aspect-square overflow-hidden bg-gray-200"
               style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}
             >
-              <img
+              <Image
                 src="/why-us-bike.png"
                 alt="Bicycle riding"
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 650px"
+                className="object-cover"
               />
             </div>
           </div>
