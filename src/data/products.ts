@@ -190,5 +190,43 @@ export const products: Product[] = [
     },
     featured: true,
     inStock: true
+  },
+  {
+    id: '11',
+    slug: 'urban-commuter-elite',
+    name: {
+      en: 'Urban Commuter Elite',
+      ar: 'أوربان كوميوتر إيليت'
+    },
+    category: 'new',
+    condition: 'new',
+    price: 1850,
+    currency: 'SAR',
+    images: ['/products/urban-commuter-elite.png'],
+    description: {
+      en: 'Premium urban commuter bike with lightweight frame.',
+      ar: 'دراجة تنقل حضرية فاخرة بهيكل خفيف الوزن.'
+    },
+    featured: true,
+    inStock: true
+  },
+  {
+    id: '12',
+    slug: 'vintage-city-classic',
+    name: {
+      en: 'Vintage City Classic',
+      ar: 'فينتاج سيتي كلاسيك'
+    },
+    category: 'used',
+    condition: 'used',
+    price: 950,
+    currency: 'SAR',
+    images: ['/products/vintage-city-classic.png'],
+    description: {
+      en: 'Classic vintage city bike, fully refurbished and ready to ride.',
+      ar: 'دراجة مدينة كلاسيكية عتيقة، تم تجديدها بالكامل وجاهزة للركوب.'
+    },
+    featured: true,
+    inStock: true
   }
 ];

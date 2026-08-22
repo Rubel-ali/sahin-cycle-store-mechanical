@@ -176,5 +176,18 @@
   },
   "galleryPage": {
     "subtitle": "Take a look at our store, products, and happy customers."
+  },
+  "productsPage": {
+    "title": "All Products",
+    "subtitle": "Browse our wide selection of bicycles and accessories.",
+    "search": "Search products...",
+    "priceRange": "Price Range",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "category": "Category",
+    "condition": "Condition",
+    "filter": "Filter",
+    "clearFilters": "Clear Filters",
+    "noResults": "No products found matching your criteria."
   }
 }
