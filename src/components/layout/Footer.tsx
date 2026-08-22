@@ -146,7 +146,11 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500" dir={isRtl ? 'rtl' : 'ltr'}>
-          <p>© {new Date().getFullYear()} Sahin Cycles. All rights reserved.</p>
+          <p>
+            {isRtl 
+              ? `© ${new Date().getFullYear()} دراجات شاهين. جميع الحقوق محفوظة.` 
+              : `© ${new Date().getFullYear()} Sahin Cycles. All rights reserved.`}
+          </p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-[#e1251b] transition-colors">{isRtl ? 'سياسة الخصوصية' : 'Privacy Policy'}</a>
             <a href="#" className="hover:text-[#e1251b] transition-colors">{isRtl ? 'شروط الخدمة' : 'Terms of Service'}</a>
