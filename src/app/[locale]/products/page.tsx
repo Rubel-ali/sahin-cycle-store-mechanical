@@ -334,9 +334,9 @@ export default function ProductsPage() {
                   )}
                 </div>
 
-                <div className="md:w-1/2 p-8 md:p-10 flex flex-col overflow-y-auto">
+                <div className="md:w-1/2 p-8 md:p-10 pt-12 md:pt-14 flex flex-col overflow-y-auto">
                   <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-2 mb-3 pr-8">
                       <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200">
                         {isAr && quickViewProduct.categoryAr ? quickViewProduct.categoryAr : quickViewProduct.category}
                       </span>
