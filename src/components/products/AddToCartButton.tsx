@@ -5,13 +5,18 @@ import { Product } from "@/data/mockProducts";
 import { useCart } from "@/context/CartContext";
 import { useTranslations } from "next-intl";
 
-export function AddToCartButton({ product }: { product: Product }) {
+export function AddToCartButton({ product, onAdd }: { product: Product; onAdd?: () => void }) {
   const { addToCart } = useCart();
   const t = useTranslations("productCard");
 
   return (
     <button 
-      onClick={() => addToCart(product)}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(product);
+        if (onAdd) onAdd();
+      }}
       disabled={!product.inStock}
       className={`w-full py-4 font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 ${
         product.inStock 

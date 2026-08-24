@@ -13,6 +13,7 @@ import { useTranslations, useLocale } from "next-intl";
 
 export default function ProductsPage() {
   const t = useTranslations("productsPage");
+  const tProductCard = useTranslations("productCard");
   const locale = useLocale();
   const isAr = locale === "ar";
   
@@ -342,7 +343,7 @@ export default function ProductsPage() {
                       <div className="flex items-center gap-1 ml-auto">
                         <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
                         <span className="text-sm font-bold text-slate-700">{quickViewProduct.rating}</span>
-                        <span className="text-xs text-slate-400">({quickViewProduct.reviews} {useTranslations("productCard")("reviews")})</span>
+                        <span className="text-xs text-slate-400">({quickViewProduct.reviews} {tProductCard("reviews")})</span>
                       </div>
                     </div>
                     
@@ -375,7 +376,7 @@ export default function ProductsPage() {
                   </div>
 
                   <div className="mt-auto flex gap-4">
-                    <AddToCartButton product={quickViewProduct} />
+                    <AddToCartButton product={quickViewProduct} onAdd={() => setQuickViewProduct(null)} />
                   </div>
                 </div>
               </motion.div>

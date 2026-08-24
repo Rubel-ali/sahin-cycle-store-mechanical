@@ -264,9 +264,9 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 setLightboxIndex((prev) => (prev! - 1 + filteredImages.length) % filteredImages.length);
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md hidden md:block"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md"
             >
-              <ChevronLeft className="w-8 h-8" />
+              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
             
             <button 
@@ -274,9 +274,9 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 setLightboxIndex((prev) => (prev! + 1) % filteredImages.length);
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md hidden md:block"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-50 p-2 md:p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md"
             >
-              <ChevronRight className="w-8 h-8" />
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
             </button>
 
             {/* Main Image Container */}
