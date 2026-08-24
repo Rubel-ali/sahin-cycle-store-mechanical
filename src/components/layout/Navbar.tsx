@@ -129,7 +129,7 @@ export function Navbar() {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-gray-900 dark:text-white p-2"
+            className="text-gray-200 hover:text-[#e1251b] transition-colors p-2"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}

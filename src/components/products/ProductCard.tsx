@@ -50,15 +50,15 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
         <img 
           src={product.image} 
           alt={name}
-          className="object-contain p-4 h-44 sm:h-52 w-full mix-blend-multiply group-hover:scale-110 group-hover:blur-[2px] transition-all duration-700 ease-out"
+          className="object-contain p-4 h-44 sm:h-52 w-full mix-blend-multiply md:group-hover:scale-110 md:group-hover:blur-[2px] transition-all duration-700 ease-out"
         />
         
         {/* Hover Actions */}
-        <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 backdrop-blur-[2px]">
+        <div className="absolute inset-0 bg-transparent md:bg-slate-900/40 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 md:backdrop-blur-[2px]">
           {onQuickView ? (
             <button 
               onClick={() => onQuickView(product)}
-              className="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
+              className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
               title={t("quickView")}
             >
               <Eye className="w-5 h-5" />
@@ -66,7 +66,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
           ) : (
             <Link 
               href={`/${locale}/products/${product.id}`}
-              className="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300"
+              className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
               title={t("viewDetails")}
             >
               <Eye className="w-5 h-5" />
@@ -78,7 +78,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
               e.preventDefault();
               addToCart(product);
             }}
-            className="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-300 delay-75"
+            className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300 delay-75"
             title={t("addToCart")}
           >
             <ShoppingCart className="w-5 h-5" />
