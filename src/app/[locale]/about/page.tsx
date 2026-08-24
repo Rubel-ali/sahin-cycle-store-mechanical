@@ -9,7 +9,7 @@ import { BookingCTA } from "@/components/about/BookingCTA";
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col flex-1 bg-white">
+    <div className="flex flex-col flex-1 bg-white w-full max-w-full overflow-x-hidden">
       <HeroSection />
       <StorySection />
       <OfferingsGrid />
