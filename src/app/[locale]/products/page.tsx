@@ -10,6 +10,7 @@ import { mockProducts, Product, Category, WheelSize } from "@/data/mockProducts"
 import { ProductCard } from "@/components/products/ProductCard";
 import { AddToCartButton } from "@/components/products/AddToCartButton";
 import { useTranslations, useLocale } from "next-intl";
+import Image from "next/image";
 
 export default function ProductsPage() {
   const t = useTranslations("productsPage");
@@ -322,10 +323,12 @@ export default function ProductsPage() {
                 </button>
 
                 <div className="md:w-1/2 bg-slate-50 p-8 flex items-center justify-center relative min-h-[300px]">
-                  <img 
+                  <Image 
                     src={quickViewProduct.image} 
                     alt={quickViewProduct.name}
-                    className="max-w-full max-h-full object-contain mix-blend-multiply"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-contain mix-blend-multiply p-8"
                   />
                   {quickViewProduct.badge && (
                     <span className="absolute top-6 left-6 px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">

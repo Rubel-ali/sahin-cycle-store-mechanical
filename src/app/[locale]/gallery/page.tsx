@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  X, ChevronLeft, ChevronRight, Search, 
-  Camera, ArrowRight 
+import {
+  X, ChevronLeft, ChevronRight, Search,
+  Camera, ArrowRight
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -14,10 +14,10 @@ import { useTranslations } from "next-intl";
 type Category = "All" | "Adult Cycles" | "Kids Bicycles" | "Workshop & Repairs" | "Happy Customers";
 
 const CATEGORIES: Category[] = [
-  "All", 
-  "Adult Cycles", 
-  "Kids Bicycles", 
-  "Workshop & Repairs", 
+  "All",
+  "Adult Cycles",
+  "Kids Bicycles",
+  "Workshop & Repairs",
   "Happy Customers"
 ];
 
@@ -144,7 +144,7 @@ export default function GalleryPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 pt-20 md:pt-28 pb-12">
-      
+
       {/* Header Section */}
       <div className="container mx-auto px-4 md:px-6 mb-12 text-center">
         <motion.div
@@ -174,9 +174,8 @@ export default function GalleryPage() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`relative px-6 py-3 rounded-full text-sm md:text-base font-semibold transition-colors duration-300 ${
-                  isActive ? "text-white" : "text-gray-600 bg-white hover:bg-gray-200 shadow-sm border border-gray-100"
-                }`}
+                className={`relative px-6 py-3 rounded-full text-sm md:text-base font-semibold transition-colors duration-300 ${isActive ? "text-white" : "text-gray-600 bg-white hover:bg-gray-200 shadow-sm border border-gray-100"
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -194,7 +193,7 @@ export default function GalleryPage() {
 
       {/* Masonry Grid */}
       <div className="container mx-auto px-4 md:px-6 mb-24">
-        <motion.div 
+        <motion.div
           layout
           className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
         >
@@ -211,13 +210,13 @@ export default function GalleryPage() {
                 onClick={() => setLightboxIndex(index)}
               >
                 {/* Fallback img tag for masonry responsiveness without layout shifting issues */}
-                <img 
-                  src={item.src} 
-                  alt={item.title} 
+                <img
+                  src={item.src}
+                  alt={item.title}
                   loading="lazy"
                   className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110"
                 />
-                
+
                 {/* Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -246,20 +245,20 @@ export default function GalleryPage() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:p-8"
           >
             {/* Backdrop Click Area */}
-            <div 
+            <div
               className="absolute inset-0"
               onClick={() => setLightboxIndex(null)}
             />
 
             {/* Controls */}
-            <button 
+            <button
               onClick={() => setLightboxIndex(null)}
               className="absolute top-6 right-6 z-50 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md"
             >
               <X className="w-8 h-8" />
             </button>
-            
-            <button 
+
+            <button
               onClick={(e) => {
                 e.stopPropagation();
                 setLightboxIndex((prev) => (prev! - 1 + filteredImages.length) % filteredImages.length);
@@ -268,8 +267,8 @@ export default function GalleryPage() {
             >
               <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
-            
-            <button 
+
+            <button
               onClick={(e) => {
                 e.stopPropagation();
                 setLightboxIndex((prev) => (prev! + 1) % filteredImages.length);
@@ -290,7 +289,7 @@ export default function GalleryPage() {
                 alt={filteredImages[lightboxIndex].title}
                 className="max-w-full max-h-[75vh] object-contain rounded-lg shadow-2xl pointer-events-auto"
               />
-              
+
               <div className="mt-6 text-center">
                 <span className="inline-block px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full mb-3">
                   {t(`categories.${filteredImages[lightboxIndex].category}`)}

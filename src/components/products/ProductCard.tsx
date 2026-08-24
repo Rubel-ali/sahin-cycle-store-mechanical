@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Star, Eye, ShoppingCart } from "lucide-react";
 import { Product } from "@/data/mockProducts";
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useCart } from "@/context/CartContext";
 
@@ -47,18 +48,20 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
 
       {/* Image Area - Clean cutouts on light background */}
       <div className="relative h-56 bg-slate-50 overflow-hidden flex items-center justify-center">
-        <img 
+        <Image 
           src={product.image} 
           alt={name}
-          className="object-contain p-4 h-44 sm:h-52 w-full mix-blend-multiply md:group-hover:scale-110 md:group-hover:blur-[2px] transition-all duration-700 ease-out"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-contain p-4 mix-blend-multiply md:group-hover:scale-110 md:group-hover:blur-[2px] transition-all duration-700 ease-out"
         />
         
-        {/* Hover Actions */}
+        {/* Actions (Always visible on mobile, hover on desktop) */}
         <div className="absolute inset-0 bg-transparent md:bg-slate-900/40 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3 md:backdrop-blur-[2px]">
           {onQuickView ? (
             <button 
-              onClick={() => onQuickView(product)}
-              className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
+              onClick={(e) => { e.stopPropagation(); e.preventDefault(); onQuickView(product); }}
+              className="cursor-pointer w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
               title={t("quickView")}
             >
               <Eye className="w-5 h-5" />
@@ -66,7 +69,8 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
           ) : (
             <Link 
               href={`/${locale}/products/${product.id}`}
-              className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
+              onClick={(e) => { e.stopPropagation(); }}
+              className="cursor-pointer w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300"
               title={t("viewDetails")}
             >
               <Eye className="w-5 h-5" />
@@ -78,7 +82,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
               e.preventDefault();
               addToCart(product);
             }}
-            className="w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300 delay-75"
+            className="cursor-pointer w-11 h-11 rounded-full bg-white/90 md:bg-white shadow-md flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-all transform md:translate-y-4 md:group-hover:translate-y-0 duration-300 delay-75"
             title={t("addToCart")}
           >
             <ShoppingCart className="w-5 h-5" />
@@ -98,7 +102,11 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
         </div>
         
         <h3 className="text-lg font-bold text-slate-900 mb-4 line-clamp-1 group-hover:text-red-600 transition-colors">
-          {name}
+          {onQuickView ? (
+            <button onClick={(e) => { e.preventDefault(); onQuickView(product); }} className="text-left w-full truncate focus:outline-none">{name}</button>
+          ) : (
+            <Link href={`/${locale}/products/${product.id}`} className="block w-full truncate focus:outline-none">{name}</Link>
+          )}
         </h3>
 
         {/* Specs Pills */}

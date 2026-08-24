@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
 export function CartDrawer() {
@@ -71,8 +72,8 @@ export function CartDrawer() {
               ) : (
                 cartItems.map((item) => (
                   <div key={item.id} className="flex gap-4 bg-white">
-                    <div className="w-24 h-24 bg-slate-50 rounded-xl flex items-center justify-center shrink-0 p-2 border border-slate-100">
-                      <img src={item.image} alt={item.name} className="object-contain w-full h-full mix-blend-multiply" />
+                    <div className="relative w-24 h-24 bg-slate-50 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 overflow-hidden">
+                      <Image src={item.image} alt={item.name} fill sizes="96px" className="object-contain p-2 mix-blend-multiply" />
                     </div>
                     
                     <div className="flex-1 flex flex-col">

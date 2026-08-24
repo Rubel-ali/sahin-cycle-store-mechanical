@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export const StorySection = () => {
   const t = useTranslations("aboutPage");
@@ -37,10 +38,12 @@ export const StorySection = () => {
           >
              {/* Using a placeholder or generic image. Will use standard image tag if no Next Image available. */}
             <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-            <img 
+            <Image 
               src="/gallery/gallery-1.png" 
               alt="Sahin Cycle Workshop"
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
               onError={(e) => {
                 e.currentTarget.src = "/why-us-bike.png";
               }}

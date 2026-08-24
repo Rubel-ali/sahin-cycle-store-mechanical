@@ -233,7 +233,21 @@
     "noCycles": "No cycles found",
     "noCyclesDesc": "We couldn't find any products matching your current filters. Try adjusting the price range or categories.",
     "techSpecs": "Technical Specifications",
-    "backToCatalog": "Back to Catalog"
+    "backToCatalog": "Back to Catalog",
+    "specs": {
+      "brakes": "Brakes",
+      "speed": "Speed",
+      "wheelSize": "Wheel Size",
+      "frame": "Frame",
+      "material": "Material",
+      "suspension": "Suspension",
+      "weight": "Weight"
+    },
+    "valueProps": {
+      "warranty": "2 Year Warranty",
+      "delivery": "Free Delivery",
+      "returns": "14 Day Returns"
+    }
   },
   "aboutPage": {
     "heroTitle1": "Two Wheels, Endless Passion",
