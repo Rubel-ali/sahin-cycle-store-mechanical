@@ -1,53 +1,43 @@
-'use client';
+"use client";
 
-import { useTranslations, useLocale } from 'next-intl';
-import { products } from '@/data/products';
-import { motion } from 'framer-motion';
-import { ShoppingCart, Heart, Search, ArrowRightLeft } from 'lucide-react';
-import { useState } from 'react';
-import Image from 'next/image';
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { mockProducts } from "@/data/mockProducts";
+import { ProductCard } from "@/components/products/ProductCard";
+import { Link } from "@/i18n/routing";
 
 export function FeaturedProducts({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
-  const t = useTranslations('featured');
-  const commonT = useTranslations('common');
-  const locale = useLocale();
-  const [activeTab, setActiveTab] = useState('new');
+  const t = useTranslations("featured");
+  const [activeTab, setActiveTab] = useState("new");
 
   const tabs = [
-    { key: 'new', label: t('tabs.new') },
-    { key: 'best', label: t('tabs.best') },
-    { key: 'viewed', label: t('tabs.viewed') }
+    { key: "new", label: t("tabs.new") },
+    { key: "best", label: t("tabs.best") },
+    { key: "viewed", label: t("tabs.viewed") }
   ];
 
   const getFilteredProducts = () => {
-    let list = products.filter(p => p.featured);
-    
-    if (activeTab === 'new') {
-      // New Arrivals: show products with condition 'new'
-      list = list.filter(p => p.condition === 'new');
-    } else if (activeTab === 'best') {
-      // Bestsellers: show high-end/popular items (simulated with price >= 1000)
-      list = list.filter(p => p.price >= 1000);
-    } else if (activeTab === 'viewed') {
-      // Most Viewed: show affordable/frequently viewed items (simulated with price < 1000)
-      list = list.filter(p => p.price < 1000);
-    }
-    
-    return list;
+    // For this prototype, we'll just slice the unified mockProducts array 
+    // to simulate different tabs loading different featured products.
+    if (activeTab === "new") return mockProducts.slice(0, 4);
+    if (activeTab === "best") return mockProducts.slice(3, 7);
+    if (activeTab === "viewed") return mockProducts.slice(5, 9);
+    return mockProducts.slice(0, 4);
   };
 
   const displayedProducts = getFilteredProducts();
 
   return (
-    <section className={`bg-white ${removeTopPadding ? 'pt-8 pb-20' : 'py-20'}`}>
+    <section className={`bg-slate-50 ${removeTopPadding ? "pt-8 pb-20" : "py-20"}`}>
       <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         {/* Title Section */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            {t('title')}
+          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+            {t("title")}
           </h2>
-          <p className="text-gray-500 mb-10 text-base">
-            {t('subtitle')}
+          <p className="text-slate-500 mb-10 text-base max-w-2xl mx-auto">
+            {t("subtitle")}
           </p>
           
           <div className="flex justify-center items-center gap-8">
@@ -57,8 +47,8 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
                 onClick={() => setActiveTab(tab.key)}
                 className={`pb-1 text-sm font-bold tracking-wide uppercase transition-colors border-b-2 ${
                   activeTab === tab.key 
-                    ? 'text-gray-800 border-[#9f2a2a]' 
-                    : 'text-gray-500 hover:text-gray-800 border-transparent'
+                    ? "text-slate-900 border-red-600" 
+                    : "text-slate-500 hover:text-slate-900 border-transparent"
                 }`}
               >
                 {tab.label}
@@ -68,56 +58,26 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          {displayedProducts.slice(0, 8).map((product, index) => (
-            <motion.div
-              key={`${product.id}-${activeTab}`} // Ensure animation triggers on tab change
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-white transition-all duration-300"
-            >
-              {/* Product Image Box */}
-              <div className="relative h-[250px] w-full flex items-center justify-center">
-                <Image 
-                  src={product.images[0]} 
-                  alt={product.name[locale as 'en' | 'ar']} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              
-              {/* Product Info */}
-              <div className="text-center px-4 mt-2 pb-4">
-                <h3 className="text-base font-semibold text-gray-800 mb-1">
-                  {product.name[locale as 'en' | 'ar']}
-                </h3>
-                <p className="text-sm text-gray-400 mb-2">
-                  {t('category')}
-                </p>
-                <p className="text-base font-bold text-[#e1251b]">
-                  {commonT('currency')} {product.price}.00
-                </p>
-                
-                {/* Icons Bar (moved below price) */}
-                <div className="mt-4 flex justify-center items-center bg-white shadow-[0_2px_10px_rgba(0,0,0,0.05)] border border-gray-50 w-max mx-auto">
-                  <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#e1251b] transition-colors border-r border-gray-100">
-                    <ShoppingCart size={16} strokeWidth={1.5} />
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#e1251b] transition-colors border-r border-gray-100">
-                    <Search size={16} strokeWidth={1.5} />
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#e1251b] transition-colors border-r border-gray-100">
-                    <ArrowRightLeft size={16} strokeWidth={1.5} />
-                  </button>
-                  <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-[#e1251b] transition-colors">
-                    <Heart size={16} strokeWidth={1.5} />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnimatePresence mode="popLayout">
+            {displayedProducts.map((product) => (
+              <ProductCard 
+                key={`${product.id}-${activeTab}`}
+                product={product} 
+                layout={true}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* View All Button */}
+        <div className="mt-16 text-center">
+          <Link 
+            href="/products" 
+            className="inline-block rounded-full px-8 py-3.5 bg-slate-900 text-white hover:bg-red-600 font-semibold shadow-md transition-all"
+          >
+            {t("viewAll") || "View All Products"}
+          </Link>
         </div>
       </div>
     </section>

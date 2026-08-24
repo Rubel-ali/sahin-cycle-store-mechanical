@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/routing';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { useCart } from '@/context/CartContext';
 
 export function Navbar() {
   const t = useTranslations('nav');
@@ -17,6 +18,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { cartCount, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +86,20 @@ export function Navbar() {
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           <LanguageSwitcher />
+          
+          <button 
+            onClick={() => setIsCartOpen(true)}
+            className="relative p-2 text-gray-200 hover:text-[#e1251b] transition-colors"
+            aria-label="Open cart"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            {cartCount > 0 && (
+              <span className="absolute top-0 right-0 translate-x-1 -translate-y-1 bg-[#e1251b] text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
           <a
             href="https://wa.me/966000000000"
             target="_blank"
@@ -97,6 +113,20 @@ export function Navbar() {
         {/* Mobile Menu Toggle */}
         <div className="flex md:hidden items-center gap-4 z-50">
           <LanguageSwitcher />
+          
+          <button 
+            onClick={() => setIsCartOpen(true)}
+            className="relative p-2 text-gray-200 hover:text-[#e1251b] transition-colors"
+            aria-label="Open cart"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            {cartCount > 0 && (
+              <span className="absolute top-0 right-0 translate-x-1 -translate-y-1 bg-[#e1251b] text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-gray-900 dark:text-white p-2"
