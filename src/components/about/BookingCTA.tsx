@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 export const BookingCTA = () => {
   const t = useTranslations("aboutPage");
   return (
-    <section className="py-24 bg-gray-900 relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-gray-900 relative overflow-hidden">
        {/* Background Decoration */}
        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-red-600/10 blur-3xl" />
        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-blue-600/10 blur-3xl" />

@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 export const KidsSafetySection = () => {
   const t = useTranslations("aboutPage");
   return (
-    <section className="py-20 bg-gray-50 overflow-hidden">
+    <section className="py-12 md:py-20 bg-gray-50 overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           <div className="flex flex-col md:flex-row">

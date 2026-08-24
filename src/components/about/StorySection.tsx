@@ -7,7 +7,7 @@ import Image from "next/image";
 export const StorySection = () => {
   const t = useTranslations("aboutPage");
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 md:py-20 bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <motion.div
