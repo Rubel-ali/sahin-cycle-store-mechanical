@@ -103,17 +103,17 @@ export function HeroBanner() {
               </div>
 
               {/* Content */}
-              <div className="container mx-auto h-full relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between text-center sm:text-left md:text-left px-4 md:px-24 pt-1 md:pt-0 pb-4 md:pb-0 gap-4 md:gap-12 max-w-[1600px] min-h-[calc(100vh-64px)] md:min-h-[600px]">
+              <div className="container mx-auto h-full relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between text-center sm:text-left md:text-left px-4 md:px-24 pt-0 md:pt-0 mt-0 md:mt-0 pb-4 md:pb-0 gap-4 md:gap-12 max-w-[1600px] min-h-[calc(100vh-64px)] md:min-h-[600px]">
 
                 {/* Left side: Bicycle Image */}
-                <div className="w-full md:w-1/2 flex justify-center items-center relative mb-6 sm:mb-8 md:mb-0 md:h-full">
+                <div className="w-full md:w-1/2 flex justify-center items-center relative -mt-3 sm:mt-0 md:mt-0 mb-6 sm:mb-8 md:mb-0 md:h-full">
                   <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, x: selectedIndex === index ? 0 : -50 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-72 md:h-auto flex items-center justify-center mx-auto ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
-                        slide.id === 3 ? 'md:ml-[5%] md:scale-140' :
-                          'md:-ml-[10%] md:scale-110'
+                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-80 md:h-auto flex items-center justify-center mx-auto ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
+                      slide.id === 3 ? 'md:ml-[5%] md:scale-140' :
+                        'md:-ml-[10%] md:scale-110'
                       } ${slide.blendMode}`}
                   >
                     {/* Placeholder for the bike image until we can generate the specific green Cube bike */}
