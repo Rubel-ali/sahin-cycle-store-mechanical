@@ -1,273 +1,280 @@
-'use client';
+"use client";
 
-import { useTranslations, useLocale } from 'next-intl';
-import { products } from '@/data/products';
-import { motion } from 'framer-motion';
-import { ShoppingCart, Heart, Search, ArrowRightLeft, Filter, X } from 'lucide-react';
-import { useState, useMemo } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Search, X, ShoppingCart, 
+  Star, ChevronDown, Check, SlidersHorizontal 
+} from "lucide-react";
+import { Product } from "@prisma/client";
+import { ProductCard } from "@/components/products/ProductCard";
+import { useTranslations, useLocale } from "next-intl";
+import { QuickViewModal } from "@/components/products/QuickViewModal";
 
-export function ProductsClient() {
-  const t = useTranslations('productsPage');
-  const catT = useTranslations('categories');
-  const commonT = useTranslations('common');
+// Redefining types since we removed mockProducts import
+type Category = "All" | "MTB/Adult" | "Road/Hybrid" | "Kids Bikes" | "Accessories" | string;
+type WheelSize = "20\"" | "24\"" | "26\"" | "27.5\"" | "29\"";
+
+export default function ProductsClient({ initialProducts }: { initialProducts: Product[] }) {
+  const t = useTranslations("productsPage");
+  const tProductCard = useTranslations("productCard");
   const locale = useLocale();
+  const isAr = locale === "ar";
+  
+  // State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<Category>("All");
+  const [priceRange, setPriceRange] = useState<number>(5000);
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [sortOption, setSortOption] = useState<"newest" | "price_asc" | "price_desc">("newest");
+  
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [minPrice, setMinPrice] = useState<string>('');
-  const [maxPrice, setMaxPrice] = useState<string>('');
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const categories = ['new', 'used', 'refurbished', 'kids', 'scooters', 'accessories'];
-  const conditions = ['new', 'used']; // Can be expanded
-
-  const toggleCategory = (cat: string) => {
-    setSelectedCategories(prev => 
-      prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
-    );
-  };
-
-  const toggleCondition = (cond: string) => {
-    setSelectedConditions(prev => 
-      prev.includes(cond) ? prev.filter(c => c !== cond) : [...prev, cond]
-    );
-  };
-
-  const clearFilters = () => {
-    setSearchQuery('');
-    setMinPrice('');
-    setMaxPrice('');
-    setSelectedCategories([]);
-    setSelectedConditions([]);
-  };
-
+  // Derived State (Filtering & Sorting)
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      // Search
-      if (searchQuery) {
-        const query = searchQuery.toLowerCase();
-        const nameEn = product.name.en.toLowerCase();
-        const nameAr = product.name.ar.toLowerCase();
-        if (!nameEn.includes(query) && !nameAr.includes(query)) {
-          return false;
-        }
-      }
+    let result = [...initialProducts];
 
-      // Price
-      if (minPrice && product.price < parseFloat(minPrice)) return false;
-      if (maxPrice && product.price > parseFloat(maxPrice)) return false;
+    if (searchQuery) {
+      result = result.filter(p => p.nameEn.toLowerCase().includes(searchQuery.toLowerCase()) || p.nameAr.includes(searchQuery));
+    }
+    if (selectedCategory !== "All") {
+      result = result.filter(p => p.category === selectedCategory);
+    }
+    if (priceRange < 5000) {
+      result = result.filter(p => p.price <= priceRange);
+    }
+    if (inStockOnly) {
+      result = result.filter(p => p.inStock);
+    }
 
-      // Category
-      if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
-        return false;
-      }
+    switch (sortOption) {
+      case "price_asc": return result.sort((a, b) => a.price - b.price);
+      case "price_desc": return result.sort((a, b) => b.price - a.price);
+      case "newest": return result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      default: return result;
+    }
+  }, [initialProducts, searchQuery, selectedCategory, priceRange, inStockOnly, sortOption]);
 
-      // Condition
-      if (selectedConditions.length > 0 && product.condition && !selectedConditions.includes(product.condition)) {
-        return false;
-      }
 
-      return true;
-    });
-  }, [searchQuery, minPrice, maxPrice, selectedCategories, selectedConditions]);
+  // UI Sections
+  const getCategoryName = (cat: Category) => {
+    if (!isAr) return cat;
+    switch (cat) {
+      case "All": return "الكل";
+      case "new": return "جديد";
+      case "used": return "مستعمل";
+      case "kids": return "أطفال";
+      case "scooters": return "سكوتر";
+      case "accessories": return "إكسسوارات";
+      default: return cat;
+    }
+  };
+
+  const FilterSidebar = () => (
+    <div className="space-y-8">
+      {/* Categories */}
+      <div>
+        <h3 className="text-lg font-bold text-slate-900 mb-4">{t("categories")}</h3>
+        <div className="space-y-2">
+          {(["All", "new", "used", "kids", "scooters", "accessories"] as Category[]).map(cat => (
+            <label key={cat} onClick={() => setSelectedCategory(cat)} className="flex items-center gap-3 cursor-pointer group">
+              <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selectedCategory === cat ? 'bg-red-600 border-red-600' : 'border-slate-300 group-hover:border-red-500'}`}>
+                {selectedCategory === cat && <Check className="w-3 h-3 text-white" />}
+              </div>
+              <span className={`font-medium ${selectedCategory === cat ? 'text-slate-900' : 'text-slate-600'} capitalize`}>
+                {getCategoryName(cat)}
+              </span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* Price Range */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-bold text-slate-900">{t("maxPrice")}</h3>
+          <span className="font-bold text-red-600">SAR {priceRange}</span>
+        </div>
+        <input 
+          type="range" 
+          min="100" 
+          max="5000" 
+          step="100"
+          value={priceRange}
+          onChange={(e) => setPriceRange(Number(e.target.value))}
+          className="w-full accent-red-600"
+        />
+        <div className="flex justify-between text-xs text-slate-400 mt-2">
+          <span>SAR 100</span>
+          <span>SAR 5000+</span>
+        </div>
+      </div>
+
+      {/* Availability */}
+      <div>
+        <h3 className="text-lg font-bold text-slate-900 mb-4">{t("availability")}</h3>
+        <label onClick={() => setInStockOnly(!inStockOnly)} className="flex items-center gap-3 cursor-pointer group">
+          <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${inStockOnly ? 'bg-red-600 border-red-600' : 'border-slate-300 group-hover:border-red-500'}`}>
+            {inStockOnly && <Check className="w-3 h-3 text-white" />}
+          </div>
+          <span className="font-medium text-slate-600">{t("inStockOnly")}</span>
+        </label>
+      </div>
+
+      {/* Clear Filters */}
+      <button 
+        onClick={() => {
+          setSelectedCategory("All");
+          setPriceRange(5000);
+          setInStockOnly(false);
+          setSearchQuery("");
+        }}
+        className="w-full py-3 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl transition-colors"
+      >
+        {t("clearAllFilters")}
+      </button>
+    </div>
+  );
 
   return (
-    <section className="bg-gray-50 py-12 md:py-20 min-h-screen">
-      <div className="container mx-auto px-4 max-w-7xl">
-        {/* Header */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
+      <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
+        
+        {/* Top Header & Controls */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('title')}</h1>
-            <p className="text-gray-500">{t('subtitle')}</p>
+            <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">{t("title")}</h1>
+            <p className="text-slate-500 font-medium">{t("showing", { count: filteredProducts.length })}</p>
           </div>
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="md:hidden flex items-center justify-center gap-2 bg-white border border-gray-200 px-4 py-2 rounded-md shadow-sm text-gray-700 hover:bg-gray-50 transition-colors"
-          >
-            <Filter size={18} />
-            {t('filter')}
-          </button>
+          
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            {/* Search */}
+            <div className="relative group w-full sm:w-auto flex-1 md:w-64">
+              <input 
+                type="text" 
+                placeholder={t("searchPlaceholder")} 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all shadow-sm"
+              />
+              <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 group-focus-within:text-red-500 transition-colors" />
+            </div>
+            
+            {/* Sort Dropdown */}
+            <div className="relative w-full sm:w-auto md:w-48">
+              <select 
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value as any)}
+                className="w-full appearance-none pl-4 pr-10 py-3 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-red-500 font-medium text-slate-700 shadow-sm cursor-pointer"
+              >
+                <option value="newest">{t("newest")}</option>
+                <option value="price_asc">{t("priceAsc")}</option>
+                <option value="price_desc">{t("priceDesc")}</option>
+              </select>
+              <ChevronDown className="w-5 h-5 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            </div>
+
+            {/* Mobile Filter Toggle */}
+            <button 
+              onClick={() => setIsMobileFilterOpen(true)}
+              className="lg:hidden flex items-center justify-center gap-2 px-6 py-3 bg-red-600 text-white font-bold rounded-xl shadow-lg shadow-red-600/20 hover:bg-red-700 transition-all w-full sm:w-auto"
+            >
+              <SlidersHorizontal className="w-5 h-5" />
+              {t("filters")}
+            </button>
+          </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 relative">
-          
-          {/* Sidebar Overlay (Mobile) */}
-          {isSidebarOpen && (
-            <div 
-              className="fixed inset-0 bg-black/50 z-40 md:hidden" 
-              onClick={() => setIsSidebarOpen(false)}
-            />
-          )}
-
-          {/* Sidebar / Filters */}
-          <div className={`fixed inset-y-0 ${locale === 'ar' ? 'right-0' : 'left-0'} z-50 w-[280px] bg-white p-6 shadow-xl transform transition-transform duration-300 ease-in-out md:relative md:transform-none md:shadow-none md:w-[260px] lg:w-[280px] md:p-0 md:bg-transparent md:z-auto h-full overflow-y-auto md:overflow-visible ${isSidebarOpen ? 'translate-x-0' : (locale === 'ar' ? 'translate-x-full' : '-translate-x-full')} md:translate-x-0`}>
-            
-            <div className="flex justify-between items-center mb-6 md:hidden">
-              <h2 className="text-xl font-bold text-gray-900">{t('filter')}</h2>
-              <button onClick={() => setIsSidebarOpen(false)} className="text-gray-500 hover:text-gray-800">
-                <X size={24} />
-              </button>
+        <div className="flex gap-8">
+          {/* Desktop Sidebar */}
+          <aside className="hidden lg:block w-64 shrink-0">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 sticky top-28">
+              <FilterSidebar />
             </div>
+          </aside>
 
-            <div className="bg-white md:border md:border-gray-100 md:rounded-lg md:shadow-sm md:p-6 space-y-8">
-              
-              {/* Search */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">{t('search')}</h3>
-                <div className="relative">
-                  <input 
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={t('search')}
-                    className="w-full border border-gray-200 rounded-md py-2 px-3 pl-9 focus:outline-none focus:ring-1 focus:ring-[#9f2a2a] focus:border-[#9f2a2a] transition-colors"
-                  />
-                  <Search size={16} className={`absolute ${locale === 'ar' ? 'right-3' : 'left-3'} top-3 text-gray-400`} />
-                </div>
-              </div>
+          {/* Mobile Sliding Sheet */}
+          <AnimatePresence>
+            {isMobileFilterOpen && (
+              <>
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 lg:hidden"
+                  onClick={() => setIsMobileFilterOpen(false)}
+                />
+                <motion.aside 
+                  initial={{ x: "-100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: "-100%" }}
+                  transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                  className="fixed inset-y-0 left-0 w-[300px] bg-white z-50 flex flex-col lg:hidden shadow-2xl"
+                >
+                  <div className="flex justify-between items-center p-6 border-b border-slate-100">
+                      <h2 className="text-2xl font-black text-slate-900">{t("filters")}</h2>
+                      <button onClick={() => setIsMobileFilterOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                        <X className="w-6 h-6 text-slate-500" />
+                      </button>
+                    </div>
+                    
+                    <div className="p-6 overflow-y-auto flex-1 pb-24">
+                      <FilterSidebar />
+                    </div>
 
-              {/* Price Range */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">{t('priceRange')}</h3>
-                <div className="flex items-center gap-2">
-                  <input 
-                    type="number" 
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                    placeholder={t('minPrice')}
-                    className="w-full border border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-[#9f2a2a] transition-colors"
-                  />
-                  <span className="text-gray-400">-</span>
-                  <input 
-                    type="number" 
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                    placeholder={t('maxPrice')}
-                    className="w-full border border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:ring-1 focus:ring-[#9f2a2a] transition-colors"
-                  />
-                </div>
-              </div>
-
-              {/* Categories */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">{t('category')}</h3>
-                <div className="space-y-2">
-                  {categories.map(cat => (
-                    <label key={cat} className="flex items-center gap-3 cursor-pointer group">
-                      <div 
-                        className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selectedCategories.includes(cat) ? 'bg-[#9f2a2a] border-[#9f2a2a]' : 'border-gray-300 group-hover:border-[#9f2a2a]'}`}
-                        onClick={() => toggleCategory(cat)}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+                      <button 
+                        onClick={() => setIsMobileFilterOpen(false)}
+                        className="w-full py-4 bg-slate-900 hover:bg-red-600 text-white font-bold rounded-xl transition-all shadow-lg"
                       >
-                        {selectedCategories.includes(cat) && <span className="text-white text-xs">✓</span>}
-                      </div>
-                      <span className="text-gray-600 group-hover:text-gray-900 select-none" onClick={() => toggleCategory(cat)}>{catT(cat as any) || cat}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              {/* Condition */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-3">{t('condition')}</h3>
-                <div className="space-y-2">
-                  {conditions.map(cond => (
-                    <label key={cond} className="flex items-center gap-3 cursor-pointer group">
-                      <div 
-                        className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${selectedConditions.includes(cond) ? 'bg-[#9f2a2a] border-[#9f2a2a]' : 'border-gray-300 group-hover:border-[#9f2a2a]'}`}
-                        onClick={() => toggleCondition(cond)}
-                      >
-                        {selectedConditions.includes(cond) && <span className="text-white text-xs">✓</span>}
-                      </div>
-                      <span className="text-gray-600 group-hover:text-gray-900 capitalize select-none" onClick={() => toggleCondition(cond)}>{t('condition')} {cond}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <button 
-                onClick={clearFilters}
-                className="w-full py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-md transition-colors"
-              >
-                {t('clearFilters')}
-              </button>
-            </div>
-          </div>
+                        Apply Filters
+                      </button>
+                    </div>
+                </motion.aside>
+              </>
+            )}
+          </AnimatePresence>
 
           {/* Product Grid */}
-          <div className="flex-1">
+          <main className="flex-1">
             {filteredProducts.length === 0 ? (
-              <div className="bg-white p-10 rounded-lg text-center shadow-sm border border-gray-100">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Search size={24} className="text-gray-400" />
+              <div className="bg-white rounded-2xl p-16 text-center border border-slate-100 shadow-sm flex flex-col items-center">
+                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6">
+                  <Search className="w-10 h-10 text-slate-300" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">{t('noResults')}</h3>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">{t("noCycles")}</h3>
+                <p className="text-slate-500 mb-6 max-w-md">{t("noCyclesDesc")}</p>
                 <button 
-                  onClick={clearFilters}
-                  className="text-[#9f2a2a] hover:underline"
+                  onClick={() => { setSelectedCategory("All"); setPriceRange(5000); setSearchQuery(""); }}
+                  className="px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg shadow-red-600/20"
                 >
-                  {t('clearFilters')}
+                  {t("clearAllFilters")}
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-                {filteredProducts.map((product, index) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    className="group relative bg-white transition-all duration-300"
-                  >
-                    {/* Product Image Box */}
-                    <div className="relative h-[250px] w-full flex items-center justify-center">
-                      <Image 
-                        src={product.images[0]} 
-                        alt={product.name[locale as 'en' | 'ar']} 
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    
-                    {/* Product Info */}
-                    <div className="text-center px-4 mt-2 pb-4">
-                      <h3 className="text-[17px] font-semibold text-[#003057] mb-1">
-                        {product.name[locale as 'en' | 'ar']}
-                      </h3>
-                      <p className="text-[15px] text-[#8a9bb2] mb-2 capitalize">
-                        {catT(product.category as any) || product.category}
-                      </p>
-                      <p className="text-base font-bold text-[#e1251b]">
-                        {commonT('currency')} {product.price}.00
-                      </p>
-                      
-                      {/* Icons Bar */}
-                      <div className="mt-5 flex justify-center items-center bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-50 w-max mx-auto">
-                        <button className="w-12 h-12 flex items-center justify-center text-[#8a9bb2] hover:text-[#e1251b] transition-colors border-r border-gray-50">
-                          <ShoppingCart size={18} strokeWidth={1.5} />
-                        </button>
-                        <button className="w-12 h-12 flex items-center justify-center text-[#8a9bb2] hover:text-[#e1251b] transition-colors border-r border-gray-50">
-                          <Search size={18} strokeWidth={1.5} />
-                        </button>
-                        <button className="w-12 h-12 flex items-center justify-center text-[#8a9bb2] hover:text-[#e1251b] transition-colors border-r border-gray-50">
-                          <ArrowRightLeft size={18} strokeWidth={1.5} />
-                        </button>
-                        <button className="w-12 h-12 flex items-center justify-center text-[#8a9bb2] hover:text-[#e1251b] transition-colors">
-                          <Heart size={18} strokeWidth={1.5} />
-                        </button>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+                <AnimatePresence>
+                  {filteredProducts.map((product) => (
+                    <ProductCard 
+                      key={product.id} 
+                      product={product} 
+                      onQuickView={setQuickViewProduct} 
+                      layout={true}
+                    />
+                  ))}
+                </AnimatePresence>
+              </motion.div>
             )}
-          </div>
-
+          </main>
         </div>
       </div>
-    </section>
+
+      <QuickViewModal 
+        product={quickViewProduct} 
+        onClose={() => setQuickViewProduct(null)} 
+      />
+
+    </div>
   );
 }

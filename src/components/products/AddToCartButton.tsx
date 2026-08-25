@@ -1,9 +1,10 @@
 "use client";
 
 import { ShoppingCart } from "lucide-react";
-import { Product } from "@/data/mockProducts";
+import { Product } from "@prisma/client";
 import { useCart } from "@/context/CartContext";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export function AddToCartButton({ product, onAdd }: { product: Product; onAdd?: () => void }) {
   const { addToCart } = useCart();
@@ -15,6 +16,9 @@ export function AddToCartButton({ product, onAdd }: { product: Product; onAdd?: 
         e.preventDefault();
         e.stopPropagation();
         addToCart(product);
+        toast.success(`Added ${product.nameEn} to cart`, {
+          description: "You can view your cart by clicking the cart icon."
+        });
         if (onAdd) onAdd();
       }}
       disabled={!product.inStock}

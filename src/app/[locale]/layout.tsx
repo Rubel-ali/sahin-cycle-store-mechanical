@@ -4,10 +4,9 @@ import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import '../globals.css';
 
-import {Navbar} from '@/components/layout/Navbar';
-import {Footer} from '@/components/layout/Footer';
 import {CartProvider} from '@/context/CartContext';
-import {CartDrawer} from '@/components/cart/CartDrawer';
+import {StorefrontLayoutWrapper} from '@/components/layout/StorefrontLayoutWrapper';
+import { Toaster } from 'sonner';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -36,13 +35,11 @@ export default async function LocaleLayout({
       <body className="antialiased min-h-screen flex flex-col">
         <NextIntlClientProvider messages={messages}>
           <CartProvider>
-            <Navbar />
-            <main className="flex-1 pt-20">
+            <StorefrontLayoutWrapper>
               {children}
-            </main>
-            <Footer />
-            <CartDrawer />
+            </StorefrontLayoutWrapper>
           </CartProvider>
+          <Toaster position="top-center" richColors />
         </NextIntlClientProvider>
       </body>
     </html>

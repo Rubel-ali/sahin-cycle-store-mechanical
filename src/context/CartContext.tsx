@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { Product } from "@/data/mockProducts";
+import { Product } from "@prisma/client";
 
 export interface CartItem extends Product {
   quantity: number;

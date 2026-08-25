@@ -1,4 +1,4 @@
-import { mockProducts } from "@/data/mockProducts";
+import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { Star, ShoppingCart, ArrowLeft, ShieldCheck, Truck, RotateCcw } from "lucide-react";
 import Link from "next/link";
@@ -13,25 +13,18 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
   const t = await getTranslations({ locale, namespace: "productsPage" });
   const tProductCard = await getTranslations({ locale, namespace: "productCard" });
 
-  const product = mockProducts.find((p) => p.id === resolvedParams.id);
+  const product = await prisma.product.findUnique({
+    where: { id: resolvedParams.id }
+  });
 
   if (!product) {
     notFound();
   }
 
-  const name = isAr && product.nameAr ? product.nameAr : product.name;
-  const category = isAr && product.categoryAr ? product.categoryAr : product.category;
-  const badge = isAr && product.badgeAr ? product.badgeAr : product.badge;
-  const shortDescription = isAr && product.shortDescriptionAr ? product.shortDescriptionAr : product.shortDescription;
-
-  // Fallback map for spec keys just in case
-  const specKeyFallback = (key: string) => {
-    try {
-      return t(`specs.${key}`);
-    } catch {
-      return key;
-    }
-  };
+  const name = isAr && product.nameAr ? product.nameAr : product.nameEn;
+  const category = product.category;
+  const badge = product.featured ? "Featured" : "";
+  const description = isAr && product.descriptionAr ? product.descriptionAr : product.descriptionEn;
 
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-20">
@@ -58,7 +51,7 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
               </span>
             )}
             <Image 
-              src={product.image} 
+              src={product.images[0] || '/placeholder.png'} 
               alt={name}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -69,13 +62,13 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
           {/* Product Info (Right Side) */}
           <div className="md:w-1/2 p-8 lg:p-12 flex flex-col">
             <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200">
+              <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200 capitalize">
                 {category}
               </span>
               <div className={`flex items-center gap-1 ${isAr ? 'mr-auto' : 'ml-auto'}`}>
                 <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                <span className="text-sm font-bold text-slate-700">{product.rating}</span>
-                <span className="text-xs text-slate-400">({product.reviews} {tProductCard("reviews")})</span>
+                <span className="text-sm font-bold text-slate-700">5.0</span>
+                <span className="text-xs text-slate-400">(12 {tProductCard("reviews")})</span>
               </div>
             </div>
             
@@ -84,27 +77,24 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
             </h1>
             
             <p className="text-slate-500 text-lg mb-8 leading-relaxed">
-              {shortDescription}
+              {description}
             </p>
             
             <div className="flex items-end gap-4 mb-8 pb-8 border-b border-slate-100">
               <span className="text-4xl font-black text-red-600">SAR {product.price.toFixed(2)}</span>
-              {product.originalPrice && (
-                <span className="text-xl text-slate-400 font-medium line-through mb-1">
-                  SAR {product.originalPrice.toFixed(2)}
-                </span>
-              )}
             </div>
 
             <div className="mb-8">
-              <h3 className="text-lg font-bold text-slate-900 mb-4">{t("techSpecs")}</h3>
+              <h3 className="text-lg font-bold text-slate-900 mb-4">Information</h3>
               <div className="grid grid-cols-2 gap-4">
-                {Object.entries(product.specs).map(([key, value]) => (
-                  <div key={key} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">{specKeyFallback(key)}</p>
-                    <p className="text-sm font-semibold text-slate-900">{value}</p>
-                  </div>
-                ))}
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <p className="text-xs font-bold text-slate-400 uppercase mb-1">Condition</p>
+                  <p className="text-sm font-semibold text-slate-900 capitalize">{product.condition}</p>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <p className="text-xs font-bold text-slate-400 uppercase mb-1">Category</p>
+                  <p className="text-sm font-semibold text-slate-900 capitalize">{product.category}</p>
+                </div>
               </div>
             </div>
 

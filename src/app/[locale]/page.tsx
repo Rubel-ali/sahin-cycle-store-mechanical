@@ -9,13 +9,18 @@ import { GalleryStrip } from '@/components/home/GalleryStrip';
 import { BikeFeaturesInfo } from '@/components/home/BikeFeaturesInfo';
 import { Testimonials } from '@/components/home/Testimonials';
 import { FAQSection } from '@/components/home/FAQSection';
+import { prisma } from '@/lib/prisma';
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const products = await prisma.product.findMany();
+
   return (
     <>
       <HeroBanner />
       <CategoryCards />
-      <FeaturedProducts />
+      <FeaturedProducts products={products} />
       <PromoSection />
       <ServicesPreview />
       <StatsCounter />

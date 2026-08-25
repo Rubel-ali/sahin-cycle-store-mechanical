@@ -3,12 +3,12 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { mockProducts, Product } from "@/data/mockProducts";
+import { Product } from "@prisma/client";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Link } from "@/i18n/routing";
 import { QuickViewModal } from "@/components/products/QuickViewModal";
 
-export function FeaturedProducts({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
+export function FeaturedProducts({ products, removeTopPadding = false }: { products: Product[], removeTopPadding?: boolean }) {
   const t = useTranslations("featured");
   const [activeTab, setActiveTab] = useState("new");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -20,12 +20,10 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
   ];
 
   const getFilteredProducts = () => {
-    // For this prototype, we'll just slice the unified mockProducts array 
-    // to simulate different tabs loading different featured products.
-    if (activeTab === "new") return mockProducts.slice(0, 4);
-    if (activeTab === "best") return mockProducts.slice(3, 7);
-    if (activeTab === "viewed") return mockProducts.slice(5, 9);
-    return mockProducts.slice(0, 4);
+    if (activeTab === "new") return products.filter(p => p.category === 'new').slice(0, 4);
+    if (activeTab === "best") return products.filter(p => p.featured).slice(0, 4);
+    if (activeTab === "viewed") return products.slice(0, 4);
+    return products.slice(0, 4);
   };
 
   const displayedProducts = getFilteredProducts();

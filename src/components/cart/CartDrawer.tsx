@@ -16,7 +16,8 @@ export function CartDrawer() {
     // Generate WhatsApp checkout message
     let message = `Hello Sahin Cycle Store! I would like to order the following items:\n\n`;
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. ${item.name} - ${item.quantity}x (SAR ${item.price})\n`;
+      const itemName = isAr && item.nameAr ? item.nameAr : item.nameEn;
+      message += `${index + 1}. ${itemName} - ${item.quantity}x (SAR ${item.price})\n`;
     });
     message += `\nTotal: SAR ${cartTotal.toFixed(2)}`;
     
@@ -73,13 +74,13 @@ export function CartDrawer() {
                 cartItems.map((item) => (
                   <div key={item.id} className="flex gap-4 bg-white">
                     <div className="relative w-24 h-24 bg-slate-50 rounded-xl flex items-center justify-center shrink-0 border border-slate-100 overflow-hidden">
-                      <Image src={item.image} alt={item.name} fill sizes="96px" className="object-contain p-2 mix-blend-multiply" />
+                      <Image src={item.images?.[0] || '/placeholder.png'} alt={item.nameEn || 'Product Image'} fill sizes="96px" className="object-contain p-2 mix-blend-multiply" />
                     </div>
                     
                     <div className="flex-1 flex flex-col">
                       <div className="flex justify-between items-start mb-1">
                         <h3 className="font-bold text-slate-900 line-clamp-1">
-                          {isAr && item.nameAr ? item.nameAr : item.name}
+                          {isAr && item.nameAr ? item.nameAr : item.nameEn}
                         </h3>
                         <button 
                           onClick={() => removeFromCart(item.id)}
@@ -89,8 +90,8 @@ export function CartDrawer() {
                         </button>
                       </div>
                       
-                      <p className="text-xs text-slate-500 mb-2">
-                        {isAr && item.categoryAr ? item.categoryAr : item.category}
+                      <p className="text-xs text-slate-500 mb-2 capitalize">
+                        {item.category}
                       </p>
                       
                       <div className="mt-auto flex items-center justify-between">

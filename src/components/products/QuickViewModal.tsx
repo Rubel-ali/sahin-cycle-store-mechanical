@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Star, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
-import { Product } from "@/data/mockProducts";
+import { Product } from "@prisma/client";
 import { useCart } from "@/context/CartContext";
 
 interface QuickViewModalProps {
@@ -45,15 +45,15 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
 
             <div className="md:w-1/2 bg-slate-50 p-8 flex items-center justify-center relative min-h-[300px]">
               <Image 
-                src={product.image} 
-                alt={product.name}
+                src={product.images[0] || '/placeholder.png'} 
+                alt={product.nameEn}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain mix-blend-multiply p-8"
               />
-              {product.badge && (
+              {product.featured && (
                 <span className="absolute top-6 left-6 px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">
-                  {product.badge}
+                  Featured
                 </span>
               )}
             </div>
@@ -61,32 +61,27 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
             <div className="md:w-1/2 p-8 md:p-10 pt-12 md:pt-14 flex flex-col overflow-y-auto">
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3 pr-8">
-                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200">
-                    {isAr && product.categoryAr ? product.categoryAr : product.category}
+                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200 capitalize">
+                    {product.category}
                   </span>
                   <div className="flex items-center gap-1 ml-auto">
                     <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    <span className="text-sm font-bold text-slate-700">{product.rating}</span>
-                    <span className="text-xs text-slate-400">({product.reviews} {tProductCard("reviews")})</span>
+                    <span className="text-sm font-bold text-slate-700">5.0</span>
+                    <span className="text-xs text-slate-400">(12 {tProductCard("reviews")})</span>
                   </div>
                 </div>
                 
                 <h2 className="text-3xl font-black text-slate-900 mb-2">
-                  {isAr && product.nameAr ? product.nameAr : product.name}
+                  {isAr && product.nameAr ? product.nameAr : product.nameEn}
                 </h2>
                 
                 <p className="text-slate-500 mb-4 text-sm leading-relaxed">
-                  {isAr && product.shortDescriptionAr ? product.shortDescriptionAr : product.shortDescription}
+                  {isAr && product.descriptionAr ? product.descriptionAr : product.descriptionEn}
                 </p>
                 
                 <div className="flex items-center justify-between gap-3 mb-4">
                   <div className="flex items-end gap-2">
                     <span className="text-xl sm:text-2xl font-black text-red-600">SAR {product.price.toFixed(2)}</span>
-                    {product.originalPrice && (
-                      <span className="text-xs sm:text-sm text-slate-400 line-through mb-0.5">
-                        SAR {product.originalPrice.toFixed(2)}
-                      </span>
-                    )}
                   </div>
                   <button 
                     onClick={(e) => {
@@ -107,14 +102,16 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
                   </button>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">{t("techSpecs")}</h3>
+                <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Information</h3>
                 <div className="grid grid-cols-2 gap-4 mb-8">
-                  {Object.entries(product.specs).map(([key, value]) => (
-                    <div key={key} className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                      <p className="text-xs font-bold text-slate-400 uppercase mb-1">{key}</p>
-                      <p className="text-sm font-semibold text-slate-900">{value}</p>
-                    </div>
-                  ))}
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">Condition</p>
+                    <p className="text-sm font-semibold text-slate-900 capitalize">{product.condition}</p>
+                  </div>
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">Category</p>
+                    <p className="text-sm font-semibold text-slate-900 capitalize">{product.category}</p>
+                  </div>
                 </div>
               </div>
             </div>

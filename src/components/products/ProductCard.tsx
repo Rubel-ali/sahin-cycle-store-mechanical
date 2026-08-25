@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Star, Eye, ShoppingCart } from "lucide-react";
-import { Product } from "@/data/mockProducts";
+import { Product } from "@prisma/client";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { useCart } from "@/context/CartContext";
@@ -19,9 +19,9 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
   const { addToCart } = useCart();
   
   const isAr = locale === "ar";
-  const name = isAr && product.nameAr ? product.nameAr : product.name;
-  const category = isAr && product.categoryAr ? product.categoryAr : product.category;
-  const badge = isAr && product.badgeAr ? product.badgeAr : product.badge;
+  const name = isAr && product.nameAr ? product.nameAr : product.nameEn;
+  const category = product.category;
+  
   return (
     <motion.div
       layout={layout}
@@ -33,9 +33,9 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
     >
       {/* Badges */}
       <div className={`absolute top-4 ${isAr ? 'right-4' : 'left-4'} z-10 flex flex-col gap-2`}>
-        {badge && (
+        {product.featured && (
           <span className="px-3 py-1 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">
-            {badge}
+            Featured
           </span>
         )}
         {!product.inStock && (
@@ -45,7 +45,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
         )}
       </div>
 
-      {/* Image Area - Clean cutouts on light background */}
+      {/* Image Area */}
       <div 
         className="relative h-56 bg-slate-50 overflow-hidden flex items-center justify-center cursor-pointer"
         onClick={(e) => {
@@ -56,7 +56,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
         }}
       >
         <Image 
-          src={product.image} 
+          src={product.images[0] || '/placeholder.png'} 
           alt={name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -92,8 +92,8 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
           <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{category}</span>
           <div className="flex items-center gap-1">
             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span className="text-sm font-bold text-slate-700">{product.rating}</span>
-            <span className="text-xs text-slate-400">({product.reviews} {t("reviews")})</span>
+            <span className="text-sm font-bold text-slate-700">5.0</span>
+            <span className="text-xs text-slate-400">(12 {t("reviews")})</span>
           </div>
         </div>
         
@@ -113,25 +113,14 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
 
         {/* Specs Pills */}
         <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
-          {product.specs.speed && (
-            <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md border border-slate-200">{product.specs.speed}</span>
-          )}
-          {product.specs.wheelSize && (
-            <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md border border-slate-200">{product.specs.wheelSize}</span>
-          )}
-          {product.specs.brakes && (
-            <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md border border-slate-200">{product.specs.brakes}</span>
-          )}
+          <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md border border-slate-200 capitalize">
+            {product.condition} Condition
+          </span>
         </div>
 
         {/* Price & Action */}
         <div className="mt-auto flex items-end justify-between gap-2">
           <div className="flex flex-col justify-end">
-            {product.originalPrice && (
-              <p className="text-sm text-slate-400 font-medium line-through mb-0.5">
-                SAR {product.originalPrice.toFixed(2)}
-              </p>
-            )}
             <p className="text-base sm:text-lg font-black text-slate-900 leading-none">
               <span className="text-xs text-slate-500 font-bold mr-1">SAR</span>
               {product.price.toFixed(2)}
