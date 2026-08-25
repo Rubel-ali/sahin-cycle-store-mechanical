@@ -103,17 +103,17 @@ export function HeroBanner() {
               </div>
 
               {/* Content */}
-              <div className="container mx-auto px-12 md:px-24 h-full relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 max-w-[1600px]">
+              <div className="container mx-auto h-full relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between text-center sm:text-left md:text-left px-4 md:px-24 pt-1 md:pt-0 pb-4 md:pb-0 gap-4 md:gap-12 max-w-[1600px] min-h-[calc(100vh-64px)] md:min-h-[600px]">
 
                 {/* Left side: Bicycle Image */}
-                <div className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center relative mt-16 md:mt-0">
+                <div className="w-full md:w-1/2 flex justify-center items-center relative mb-6 sm:mb-8 md:mb-0 md:h-full">
                   <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, x: selectedIndex === index ? 0 : -50 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className={`relative w-[130%] max-w-[950px] aspect-[4/3] ${slide.id === 2 ? '-ml-[5%] md:-ml-[10%] scale-90 md:scale-95' :
-                        slide.id === 3 ? 'ml-[2%] md:ml-[5%] scale-125 md:scale-140' :
-                          '-ml-[5%] md:-ml-[10%] scale-105 md:scale-110'
+                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-72 md:h-auto flex items-center justify-center mx-auto ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
+                        slide.id === 3 ? 'md:ml-[5%] md:scale-140' :
+                          'md:-ml-[10%] md:scale-110'
                       } ${slide.blendMode}`}
                   >
                     {/* Placeholder for the bike image until we can generate the specific green Cube bike */}
@@ -121,19 +121,19 @@ export function HeroBanner() {
                       src={slide.bikeImg}
                       alt={slide.title1}
                       fill
-                      className="object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)]"
+                      className={`object-contain w-auto h-full max-h-64 sm:max-h-72 md:max-h-none mx-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-transform ${slide.id === 3 ? 'scale-125 md:scale-100' : 'scale-110 sm:scale-100 md:scale-100'}`}
                       priority={index === 0}
                     />
                   </motion.div>
                 </div>
 
                 {/* Right side: Text and Buttons */}
-                <div className="w-full md:w-1/2 flex flex-col justify-center items-start pt-4 md:pt-0 md:px-8 lg:px-12 mb-10 md:mb-0">
+                <div className="w-full md:w-1/2 flex flex-col justify-center items-center sm:items-start md:items-start md:px-8 lg:px-12">
                   <motion.h1
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, y: selectedIndex === index ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] font-bold text-white leading-[1.1] mb-6 tracking-tight"
+                    className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-black md:font-bold text-white leading-tight md:leading-[1.1] mb-2 md:mt-0 md:mb-6 tracking-tight text-center sm:text-left md:text-left"
                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                   >
                     {slide.title1} <br />
@@ -144,7 +144,7 @@ export function HeroBanner() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, y: selectedIndex === index ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    className="text-sm md:text-base text-gray-300 mb-8 max-w-[500px] leading-loose font-light"
+                    className="text-xs sm:text-sm md:text-base text-slate-300 md:text-gray-300 mb-3 md:mb-8 max-w-xs sm:max-w-md md:max-w-[500px] mx-auto sm:mx-0 md:mx-0 line-clamp-2 md:line-clamp-none leading-relaxed md:leading-loose font-light"
                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                   >
                     {slide.desc}
@@ -154,17 +154,17 @@ export function HeroBanner() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, y: selectedIndex === index ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.6 }}
-                    className="flex flex-row gap-4"
+                    className="flex flex-row gap-3 md:gap-4 justify-center sm:justify-start md:justify-start w-full sm:w-auto"
                   >
                     <Link
                       href={slide.btn1Link || "/products"}
-                      className="px-8 py-3 bg-[#e1251b] hover:bg-red-700 text-white text-xs font-semibold tracking-wider transition-colors"
+                      className="px-5 py-2 md:px-8 md:py-3 bg-[#e1251b] hover:bg-red-700 text-white text-xs sm:text-sm md:text-xs font-bold md:font-semibold tracking-wider transition-colors"
                     >
                       {slide.btn1Text || "VIEW MORE"}
                     </Link>
                     <Link
                       href={slide.btn2Link || "/products"}
-                      className="px-8 py-3 bg-transparent border border-white/60 hover:bg-white hover:text-black text-white text-xs font-semibold tracking-wider transition-all"
+                      className="px-5 py-2 md:px-8 md:py-3 bg-transparent border border-white/60 hover:bg-white hover:text-black text-white text-xs sm:text-sm md:text-xs font-bold md:font-semibold tracking-wider transition-all"
                     >
                       {slide.btn2Text || "SHOP NOW"}
                     </Link>
