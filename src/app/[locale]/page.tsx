@@ -3,6 +3,7 @@ import { CategoryCards } from '@/components/home/CategoryCards';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { PromoSection } from '@/components/home/PromoSection';
 import { ServicesPreview } from '@/components/home/ServicesPreview';
+import { StatsCounter } from '@/components/home/StatsCounter';
 import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { GalleryStrip } from '@/components/home/GalleryStrip';
 import { BikeFeaturesInfo } from '@/components/home/BikeFeaturesInfo';
@@ -17,6 +18,7 @@ export default function HomePage() {
       <FeaturedProducts />
       <PromoSection />
       <ServicesPreview />
+      <StatsCounter />
       <WhyChooseUs />
       <GalleryStrip />
       <BikeFeaturesInfo />

@@ -18,10 +18,10 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
   ];
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="pt-24 pb-6 sm:pb-8 md:pb-10 bg-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         {/* Top Section: Image and Text */}
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-24 max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 max-w-6xl mx-auto">
 
           {/* Left side: Blob Image */}
           <div className="flex-1 lg:flex-[1.2] w-full flex justify-center lg:justify-start rtl:lg:justify-end relative lg:-ml-12 rtl:lg:-mr-12 rtl:lg:ml-0">

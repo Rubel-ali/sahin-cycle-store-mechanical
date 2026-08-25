@@ -3,13 +3,15 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { mockProducts } from "@/data/mockProducts";
+import { mockProducts, Product } from "@/data/mockProducts";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Link } from "@/i18n/routing";
+import { QuickViewModal } from "@/components/products/QuickViewModal";
 
 export function FeaturedProducts({ removeTopPadding = false }: { removeTopPadding?: boolean }) {
   const t = useTranslations("featured");
   const [activeTab, setActiveTab] = useState("new");
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
   const tabs = [
     { key: "new", label: t("tabs.new") },
@@ -29,7 +31,7 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
   const displayedProducts = getFilteredProducts();
 
   return (
-    <section className={`bg-slate-50 ${removeTopPadding ? "pt-8 pb-20" : "py-20"}`}>
+    <section className={`bg-slate-50 ${removeTopPadding ? "pt-8 pb-10 md:pb-20" : "py-10 md:py-20"}`}>
       <div className="container mx-auto px-4 md:px-8 max-w-7xl">
         {/* Title Section */}
         <div className="text-center mb-12">
@@ -64,6 +66,7 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
               <ProductCard 
                 key={`${product.id}-${activeTab}`}
                 product={product} 
+                onQuickView={setQuickViewProduct}
                 layout={true}
               />
             ))}
@@ -80,6 +83,11 @@ export function FeaturedProducts({ removeTopPadding = false }: { removeTopPaddin
           </Link>
         </div>
       </div>
+      
+      <QuickViewModal 
+        product={quickViewProduct} 
+        onClose={() => setQuickViewProduct(null)} 
+      />
     </section>
   );
 }

@@ -8,9 +8,8 @@ import {
 } from "lucide-react";
 import { mockProducts, Product, Category, WheelSize } from "@/data/mockProducts";
 import { ProductCard } from "@/components/products/ProductCard";
-import { AddToCartButton } from "@/components/products/AddToCartButton";
 import { useTranslations, useLocale } from "next-intl";
-import Image from "next/image";
+import { QuickViewModal } from "@/components/products/QuickViewModal";
 
 export default function ProductsPage() {
   const t = useTranslations("productsPage");
@@ -297,96 +296,10 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* Quick View Modal */}
-      <AnimatePresence>
-        {quickViewProduct && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8"
-              onClick={() => setQuickViewProduct(null)}
-            >
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                onClick={(e) => e.stopPropagation()}
-                className="bg-white rounded-3xl overflow-hidden shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col md:flex-row relative"
-              >
-                <button 
-                  onClick={() => setQuickViewProduct(null)}
-                  className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-colors shadow-sm"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="md:w-1/2 bg-slate-50 p-8 flex items-center justify-center relative min-h-[300px]">
-                  <Image 
-                    src={quickViewProduct.image} 
-                    alt={quickViewProduct.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-contain mix-blend-multiply p-8"
-                  />
-                  {quickViewProduct.badge && (
-                    <span className="absolute top-6 left-6 px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">
-                      {quickViewProduct.badge}
-                    </span>
-                  )}
-                </div>
-
-                <div className="md:w-1/2 p-8 md:p-10 pt-12 md:pt-14 flex flex-col overflow-y-auto">
-                  <div className="mb-6">
-                    <div className="flex items-center gap-2 mb-3 pr-8">
-                      <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200">
-                        {isAr && quickViewProduct.categoryAr ? quickViewProduct.categoryAr : quickViewProduct.category}
-                      </span>
-                      <div className="flex items-center gap-1 ml-auto">
-                        <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                        <span className="text-sm font-bold text-slate-700">{quickViewProduct.rating}</span>
-                        <span className="text-xs text-slate-400">({quickViewProduct.reviews} {tProductCard("reviews")})</span>
-                      </div>
-                    </div>
-                    
-                    <h2 className="text-3xl font-black text-slate-900 mb-2">
-                      {isAr && quickViewProduct.nameAr ? quickViewProduct.nameAr : quickViewProduct.name}
-                    </h2>
-                    
-                    <p className="text-slate-500 mb-4 text-sm leading-relaxed">
-                      {isAr && quickViewProduct.shortDescriptionAr ? quickViewProduct.shortDescriptionAr : quickViewProduct.shortDescription}
-                    </p>
-                    
-                    <div className="flex items-end gap-3 mb-8">
-                      <span className="text-4xl font-black text-red-600">SAR {quickViewProduct.price.toFixed(2)}</span>
-                      {quickViewProduct.originalPrice && (
-                        <span className="text-lg text-slate-400 font-medium line-through mb-1">
-                          SAR {quickViewProduct.originalPrice.toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">{t("techSpecs")}</h3>
-                    <div className="grid grid-cols-2 gap-4 mb-8">
-                      {Object.entries(quickViewProduct.specs).map(([key, value]) => (
-                        <div key={key} className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                          <p className="text-xs font-bold text-slate-400 uppercase mb-1">{key}</p>
-                          <p className="text-sm font-semibold text-slate-900">{value}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-auto flex gap-4">
-                    <AddToCartButton product={quickViewProduct} onAdd={() => setQuickViewProduct(null)} />
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <QuickViewModal 
+        product={quickViewProduct} 
+        onClose={() => setQuickViewProduct(null)} 
+      />
 
     </div>
   );

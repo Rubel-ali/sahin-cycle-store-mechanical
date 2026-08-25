@@ -86,7 +86,7 @@ export function HeroBanner() {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="relative w-full h-[100vh] min-h-[600px] max-h-[900px] bg-[#0a0a0a] overflow-hidden group font-sans">
+    <section className="relative w-full min-h-[560px] md:h-[100vh] md:min-h-[600px] max-h-[900px] bg-[#0a0a0a] overflow-hidden group font-sans">
       <div className="overflow-hidden w-full h-full" ref={emblaRef}>
         <div className="flex w-full h-full">
           {slides.map((slide, index) => (
@@ -103,15 +103,15 @@ export function HeroBanner() {
               </div>
 
               {/* Content */}
-              <div className="container mx-auto h-full relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between text-center sm:text-left md:text-left px-4 md:px-24 pt-0 md:pt-0 mt-0 md:mt-0 pb-4 md:pb-0 gap-4 md:gap-12 max-w-[1600px] min-h-[calc(100vh-64px)] md:min-h-[600px]">
+              <div className="container mx-auto h-full relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between text-center sm:text-left md:text-left px-4 md:px-24 pt-6 sm:pt-8 md:pt-0 mt-0 md:mt-0 pb-0 md:pb-0 gap-4 md:gap-12 max-w-[1600px] min-h-[560px] md:min-h-[600px]">
 
                 {/* Left side: Bicycle Image */}
-                <div className="w-full md:w-1/2 flex justify-center items-center relative -mt-3 sm:mt-0 md:mt-0 mb-6 sm:mb-8 md:mb-0 md:h-full">
+                <div className="w-full md:w-1/2 flex justify-center items-center relative pt-0 mt-0 mb-4 md:mb-0 md:h-full">
                   <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, x: selectedIndex === index ? 0 : -50 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-80 md:h-auto flex items-center justify-center mx-auto ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
+                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-72 md:h-auto flex items-center justify-center mx-auto p-2 overflow-visible ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
                       slide.id === 3 ? 'md:ml-[5%] md:scale-140' :
                         'md:-ml-[10%] md:scale-110'
                       } ${slide.blendMode}`}
@@ -121,7 +121,7 @@ export function HeroBanner() {
                       src={slide.bikeImg}
                       alt={slide.title1}
                       fill
-                      className={`object-contain w-auto h-full max-h-64 sm:max-h-72 md:max-h-none mx-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-transform ${slide.id === 3 ? 'scale-125 md:scale-100' : 'scale-110 sm:scale-100 md:scale-100'}`}
+                      className={`object-contain w-auto h-full max-h-60 sm:max-h-72 md:max-h-none mx-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-transform ${slide.id === 3 ? 'scale-125 md:scale-100' : 'scale-110 sm:scale-100 md:scale-100'}`}
                       priority={index === 0}
                     />
                   </motion.div>

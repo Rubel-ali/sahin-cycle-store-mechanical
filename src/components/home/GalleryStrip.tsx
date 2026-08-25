@@ -25,7 +25,21 @@ export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
   ];
 
   return (
-    <section className="py-12 relative overflow-hidden group bg-white">
+    <section className="pt-6 sm:pt-8 md:pt-10 pb-12 relative overflow-hidden group bg-white">
+      {/* Section Header */}
+      <div className="text-center px-4 mb-6 sm:mb-8 relative z-10">
+        <span className="text-xs sm:text-sm font-bold tracking-widest text-red-600 uppercase mb-2 inline-block">
+          VISUAL JOURNEY
+        </span>
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Our Cycle <span className="text-red-600">Gallery</span>
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
+          Explore our curated collection of rides, workshop moments, and community adventures across the city.
+        </p>
+        <div className="w-12 h-1 bg-red-600 mx-auto mt-4 rounded-full"></div>
+      </div>
+
       <div className="flex flex-col gap-4" dir="ltr">
         {/* Top Row - Right to Left */}
         <div className="relative z-10 flex w-[200vw] sm:w-[150vw] lg:w-[120vw]">

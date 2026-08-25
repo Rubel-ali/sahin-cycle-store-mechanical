@@ -204,16 +204,16 @@ const ProcessWorkflow = () => {
           <p className="text-gray-600">{t("processDesc")}</p>
         </div>
         
-        <div className="flex flex-col md:flex-row justify-between items-center max-w-5xl mx-auto relative">
+        <div className="grid grid-cols-2 gap-y-10 gap-x-4 md:flex md:flex-row md:justify-between items-start md:items-center max-w-5xl mx-auto relative">
           <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-100 -translate-y-1/2 z-0" />
           
           {steps.map((step, idx) => (
-            <div key={idx} className="relative z-10 flex flex-col items-center mb-12 md:mb-0 bg-white px-4">
-              <div className="w-20 h-20 rounded-full bg-gray-50 border-4 border-white shadow-xl flex items-center justify-center mb-6 text-red-600">
-                <step.icon className="w-8 h-8" />
+            <div key={idx} className="relative z-10 flex flex-col items-center bg-white px-2">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-50 border-4 border-white shadow-xl flex items-center justify-center mb-4 sm:mb-6 text-red-600">
+                <step.icon className="w-6 h-6 sm:w-8 sm:h-8" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-              <p className="text-gray-500 text-center text-sm whitespace-nowrap">{step.desc}</p>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">{step.title}</h3>
+              <p className="text-gray-500 text-center text-xs sm:text-sm">{step.desc}</p>
             </div>
           ))}
         </div>
