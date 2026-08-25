@@ -30,7 +30,7 @@ export default function ProductModal({ product, onClose, onSave }: ProductModalP
     nameAr: product?.nameAr || '',
     category: product?.category || 'new',
     condition: product?.condition || 'new',
-    price: product?.price || 0,
+    price: product?.price || '',
     images: product?.images || [],
     descriptionEn: product?.descriptionEn || '',
     descriptionAr: product?.descriptionAr || '',
@@ -44,8 +44,6 @@ export default function ProductModal({ product, onClose, onSave }: ProductModalP
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData(prev => ({ ...prev, [name]: checked }));
-    } else if (name === 'price') {
-      setFormData(prev => ({ ...prev, [name]: parseFloat(value) || 0 }));
     } else {
       setFormData(prev => {
         const newData = { ...prev, [name]: value };
@@ -103,10 +101,15 @@ export default function ProductModal({ product, onClose, onSave }: ProductModalP
       const url = product ? `/api/admin/products/${product.id}` : '/api/admin/products';
       const method = product ? 'PUT' : 'POST';
 
+      const payload = {
+        ...formData,
+        price: parseFloat(formData.price as string) || 0,
+      };
+
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (res.ok) {
@@ -200,7 +203,7 @@ export default function ProductModal({ product, onClose, onSave }: ProductModalP
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider">Price (SAR)</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-medium">SAR</span>
-                  <input type="number" name="price" value={formData.price} onChange={handleChange} required min="0" step="0.01" className="w-full pl-14 pr-4 py-3 bg-slate-900 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 rounded-xl text-white font-bold" />
+                  <input type="number" name="price" value={formData.price} onChange={handleChange} required min="0" step="0.01" placeholder="0.00" className="w-full pl-14 pr-4 py-3 bg-slate-900 border border-slate-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 rounded-xl text-white font-bold" />
                 </div>
               </div>
               <div className="space-y-1.5">
