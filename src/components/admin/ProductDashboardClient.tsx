@@ -64,6 +64,28 @@ export default function ProductDashboardClient({ initialProducts }: { initialPro
     setEditingProduct(null);
   };
 
+  const handleToggleStock = async (id: string, newInStock: boolean) => {
+    // Optimistic update
+    setProducts(products.map(p => p.id === id ? { ...p, inStock: newInStock } : p));
+    
+    try {
+      const res = await fetch(`/api/admin/products/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ inStock: newInStock })
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to update stock status');
+      }
+      toast.success(newInStock ? 'Product marked as IN STOCK' : 'Product marked as OUT OF STOCK');
+    } catch (e) {
+      toast.error('Error updating stock status');
+      // Revert optimistic update
+      setProducts(products.map(p => p.id === id ? { ...p, inStock: !newInStock } : p));
+    }
+  };
+
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
       const matchesSearch = 
@@ -196,15 +218,15 @@ export default function ProductDashboardClient({ initialProducts }: { initialPro
                   <td className="px-6 py-4">
                     <div className="flex flex-col gap-2">
                       {product.inStock ? (
-                        <div className="inline-flex items-center gap-1.5 text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2.5 py-1 rounded-lg text-xs font-bold w-fit">
+                        <button onClick={() => handleToggleStock(product.id, false)} className="inline-flex items-center gap-1.5 text-emerald-400 bg-emerald-400/10 hover:bg-emerald-400/20 border border-emerald-400/20 px-2.5 py-1 rounded-lg text-xs font-bold w-fit transition-colors cursor-pointer">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           IN STOCK
-                        </div>
+                        </button>
                       ) : (
-                        <div className="inline-flex items-center gap-1.5 text-rose-400 bg-rose-400/10 border border-rose-400/20 px-2.5 py-1 rounded-lg text-xs font-bold w-fit">
+                        <button onClick={() => handleToggleStock(product.id, true)} className="inline-flex items-center gap-1.5 text-rose-400 bg-rose-400/10 hover:bg-rose-400/20 border border-rose-400/20 px-2.5 py-1 rounded-lg text-xs font-bold w-fit transition-colors cursor-pointer">
                           <XCircle className="w-3.5 h-3.5" />
                           OUT OF STOCK
-                        </div>
+                        </button>
                       )}
                       
                       {product.featured && (
@@ -218,17 +240,17 @@ export default function ProductDashboardClient({ initialProducts }: { initialPro
 
                   {/* Actions */}
                   <td className="px-6 py-4 text-right">
-                    <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center justify-end gap-2">
                       <button 
                         onClick={() => { setEditingProduct(product); setIsModalOpen(true); }}
-                        className="p-2.5 bg-slate-800 hover:bg-blue-600 text-slate-400 hover:text-white rounded-xl transition-all shadow-sm hover:shadow-blue-600/20"
+                        className="p-2.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white rounded-xl transition-all shadow-sm hover:shadow-blue-600/20"
                         title="Edit Product"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={() => handleDelete(product.id, product.nameEn)}
-                        className="p-2.5 bg-slate-800 hover:bg-red-600 text-slate-400 hover:text-white rounded-xl transition-all shadow-sm hover:shadow-red-600/20"
+                        className="p-2.5 bg-rose-600/20 text-rose-400 hover:bg-rose-600 hover:text-white rounded-xl transition-all shadow-sm hover:shadow-rose-600/20"
                         title="Delete Product"
                       >
                         <Trash2 className="w-4 h-4" />

@@ -129,14 +129,19 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
           <div className="flex items-center gap-1.5">
             <button
               onClick={(e) => {
+                if (!product.inStock) return;
                 e.stopPropagation();
                 e.preventDefault();
                 onQuickView(product);
               }}
               disabled={!product.inStock}
-              className="h-8 px-3.5 flex items-center justify-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg shadow-sm transition active:scale-95 whitespace-nowrap"
+              className={`h-8 px-3.5 flex items-center justify-center text-xs font-bold rounded-lg shadow-sm transition whitespace-nowrap ${
+                product.inStock 
+                  ? 'bg-red-600 hover:bg-red-700 text-white cursor-pointer active:scale-95' 
+                  : 'bg-slate-200 text-slate-400 border border-slate-300 cursor-not-allowed pointer-events-none'
+              }`}
             >
-              Buy Now
+              {product.inStock ? 'Buy Now' : 'Out of Stock'}
             </button>
             <button 
               onClick={(e) => {

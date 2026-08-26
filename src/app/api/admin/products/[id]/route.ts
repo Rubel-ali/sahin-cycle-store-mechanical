@@ -1,6 +1,27 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const data = await request.json();
+    const resolvedParams = await params;
+    
+    const updateData: any = {};
+    if (data.inStock !== undefined) updateData.inStock = data.inStock;
+    if (data.featured !== undefined) updateData.featured = data.featured;
+
+    const product = await prisma.product.update({
+      where: { id: resolvedParams.id },
+      data: updateData
+    });
+
+    return NextResponse.json(product);
+  } catch (error: any) {
+    console.error('Failed to patch product:', error);
+    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
+  }
+}
+
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const data = await request.json();

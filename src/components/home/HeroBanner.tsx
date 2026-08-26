@@ -21,8 +21,8 @@ export function HeroBanner() {
       title3: t('slide1.title3'),
       desc: t('slide1.desc'),
       // Since image generation is temporarily down, using a highly relevant placeholder.
-      bikeImg: '/products/bg-r2.png',
-      bgImg: 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?q=80&w=2070&auto=format&fit=crop',
+      bikeImg: '/slide1.png',
+      bgImg: '/bg.png',
       blendMode: '', // Default behavior
       btn1Text: t('slide1.btn1'),
       btn1Link: '/services',
@@ -35,8 +35,8 @@ export function HeroBanner() {
       title2: t('slide2.title2'),
       title3: t('slide2.title3'),
       desc: t('slide2.desc'),
-      bikeImg: '/products/bg-r1.png',
-      bgImg: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=2074&auto=format&fit=crop',
+      bikeImg: '/slide3.png',
+      bgImg: '/bg3.png',
       blendMode: '', // Default behavior
       btn1Text: t('slide2.btn1'),
       btn1Link: '/products',
@@ -49,9 +49,9 @@ export function HeroBanner() {
       title2: t('slide3.title2'),
       title3: t('slide3.title3'),
       desc: t('slide3.desc'),
-      bikeImg: '/products/bg-r.png',
-      bgImg: '/kids_bike_bg.jpg',
-      blendMode: '', // Default behavior
+      bikeImg: '/slide4.png',
+      bgImg: '/bg2.png',
+      blendMode: '', // Removed mix-blend-screen because background was manually removed
       btn1Text: t('slide3.btn1'),
       btn1Link: '/products',
       btn2Text: t('slide3.btn2'),
@@ -98,8 +98,7 @@ export function HeroBanner() {
                   style={{ backgroundImage: `url(${slide.bgImg})` }}
                 />
                 {/* Dark overlay to match screenshot's moody feel */}
-                <div className="absolute inset-0 bg-black/60 mix-blend-multiply" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-black/60 to-[#080d1a]/95" />
               </div>
 
               {/* Content */}
@@ -111,17 +110,17 @@ export function HeroBanner() {
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, x: selectedIndex === index ? 0 : -50 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className={`relative w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-72 md:h-auto flex items-center justify-center mx-auto p-2 overflow-visible ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
+                    className={`relative bg-transparent w-full md:w-[130%] max-w-[950px] aspect-[4/3] h-64 sm:h-72 md:h-auto flex items-center justify-center mx-auto p-2 overflow-visible ${slide.id === 2 ? 'md:-ml-[10%] md:scale-95' :
                       slide.id === 3 ? 'md:ml-[5%] md:scale-140' :
                         'md:-ml-[10%] md:scale-110'
-                      } ${slide.blendMode}`}
+                      }`}
                   >
                     {/* Placeholder for the bike image until we can generate the specific green Cube bike */}
                     <Image
                       src={slide.bikeImg}
                       alt={slide.title1}
                       fill
-                      className={`object-contain w-auto h-full max-h-60 sm:max-h-72 md:max-h-none mx-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-transform ${slide.id === 3 ? 'scale-125 md:scale-100' : 'scale-110 sm:scale-100 md:scale-100'}`}
+                      className={`object-contain bg-transparent w-auto h-full max-h-60 sm:max-h-72 md:max-h-none mx-auto drop-shadow-[0_15px_25px_rgba(0,0,0,0.6)] transition-transform ${slide.id === 3 ? 'scale-125 md:scale-100' : 'scale-110 sm:scale-100 md:scale-100'} ${slide.blendMode}`}
                       priority={index === 0}
                     />
                   </motion.div>
@@ -133,7 +132,7 @@ export function HeroBanner() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, y: selectedIndex === index ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-black md:font-bold text-white leading-tight md:leading-[1.1] mb-2 md:mt-0 md:mb-6 tracking-tight text-center sm:text-left md:text-left"
+                    className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[4.5rem] font-black md:font-bold text-white leading-tight md:leading-[1.1] mb-2 md:mt-0 md:mb-6 tracking-tight text-center sm:text-left md:text-left drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]"
                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                   >
                     {slide.title1} <br />
@@ -144,7 +143,7 @@ export function HeroBanner() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: selectedIndex === index ? 1 : 0, y: selectedIndex === index ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
-                    className="text-xs sm:text-sm md:text-base text-slate-300 md:text-gray-300 mb-3 md:mb-8 max-w-xs sm:max-w-md md:max-w-[500px] mx-auto sm:mx-0 md:mx-0 line-clamp-2 md:line-clamp-none leading-relaxed md:leading-loose font-light"
+                    className="text-xs sm:text-sm md:text-base text-slate-300 md:text-gray-300 mb-3 md:mb-8 max-w-xs sm:max-w-md md:max-w-[500px] mx-auto sm:mx-0 md:mx-0 line-clamp-2 md:line-clamp-none leading-relaxed md:leading-loose font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
                     dir={locale === 'ar' ? 'rtl' : 'ltr'}
                   >
                     {slide.desc}
