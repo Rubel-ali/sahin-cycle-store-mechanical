@@ -24,7 +24,7 @@ export function StorefrontLayoutWrapper({ children }: { children: ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className="flex-1 pt-20">
+      <main className="flex-1 pt-[72px] md:pt-20">
         {children}
       </main>
       <Footer />

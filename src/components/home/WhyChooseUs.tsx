@@ -66,7 +66,7 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
             </p>
 
             {/* Bottom Section: Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-2xl">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-10 max-w-2xl">
               {features.map((feature, index) => (
                 <motion.div
                   key={index}
@@ -74,12 +74,12 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#e1251b]/40 hover:shadow-sm transition-all group"
+                  className="flex flex-col sm:flex-row items-center sm:justify-start justify-center gap-2 sm:gap-4 p-3 sm:p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#e1251b]/40 hover:shadow-sm transition-all group text-center sm:text-start"
                 >
-                  <div className="w-12 h-12 flex-shrink-0 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                     <feature.icon className="w-5 h-5 text-[#e1251b] stroke-[2]" />
                   </div>
-                  <h3 className="text-sm md:text-base font-medium text-gray-800">{feature.text}</h3>
+                  <h3 className="text-xs sm:text-sm md:text-base font-medium text-gray-800 leading-snug">{feature.text}</h3>
                 </motion.div>
               ))}
             </div>
