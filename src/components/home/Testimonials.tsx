@@ -27,7 +27,7 @@ export function Testimonials() {
   }, [emblaApi]);
 
   return (
-    <section className="py-20 relative overflow-hidden group bg-white">
+    <section className="py-20 relative overflow-hidden bg-white">
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="mb-12">
@@ -42,7 +42,7 @@ export function Testimonials() {
                 key={testimonial.id} 
                 className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] pl-4 rtl:pr-4 rtl:pl-0"
               >
-                <div className="bg-gray-50 p-8 rounded-2xl shadow-sm border border-gray-100 h-full relative">
+                <div className="group bg-white p-8 rounded-3xl shadow-sm border border-slate-200/70 h-full relative hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/5 hover:-translate-y-1 transition-all duration-300">
                   <Quote className="absolute top-6 right-8 rtl:left-8 rtl:right-auto rtl:scale-x-[-1] w-12 h-12 text-[#e1251b]/20" />
                   <div className="flex gap-1 mb-6 relative z-10">
                     {[...Array(5)].map((_, i) => (
@@ -56,7 +56,7 @@ export function Testimonials() {
                     "{testimonial.text[locale as 'en' | 'ar']}"
                   </p>
                   <div className="flex items-center gap-4 relative z-10">
-                    <div className="w-12 h-12 bg-[#e1251b]/20 rounded-full flex items-center justify-center text-[#e1251b] font-bold text-lg">
+                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-lg group-hover:bg-red-500 group-hover:text-white transition-colors duration-300">
                       {testimonial.name[locale as 'en' | 'ar'].charAt(0)}
                     </div>
                     <div>

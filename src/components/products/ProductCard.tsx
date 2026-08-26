@@ -35,7 +35,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
       <div className={`absolute top-4 ${isAr ? 'right-4' : 'left-4'} z-10 flex flex-col gap-2`}>
         {product.featured && (
           <span className="px-3 py-1 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">
-            Featured
+            {isAr ? 'مميز' : 'Featured'}
           </span>
         )}
         {!product.inStock && (
@@ -89,7 +89,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
       {/* Content Area */}
       <div className="p-6 flex flex-col flex-1">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{category}</span>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{isAr ? (category === 'road' ? 'طريق' : category === 'mountain' ? 'جبلي' : category === 'kids' ? 'أطفال' : category === 'accessories' ? 'إكسسوارات' : category === 'used' ? 'مستعمل' : category === 'new' ? 'جديد' : category) : category}</span>
           <div className="flex items-center gap-1">
             <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
             <span className="text-sm font-bold text-slate-700">5.0</span>
@@ -114,16 +114,16 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
         {/* Specs Pills */}
         <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
           <span className="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs font-semibold rounded-md border border-slate-200 capitalize">
-            {product.condition} Condition
+            {isAr ? (product.condition === 'new' ? 'جديد' : 'مستعمل') : `${product.condition} Condition`}
           </span>
         </div>
 
         {/* Price & Action */}
         <div className="mt-auto flex items-end justify-between gap-2">
-          <div className="flex flex-col justify-end">
-            <p className="text-base sm:text-lg font-black text-slate-900 leading-none">
-              <span className="text-xs text-slate-500 font-bold mr-1">SAR</span>
-              {product.price.toFixed(2)}
+          <div className="flex flex-col justify-end" dir={isAr ? 'rtl' : 'ltr'}>
+            <p className="text-base sm:text-lg font-black text-slate-900 leading-none flex gap-1 items-end">
+              <span>{product.price.toFixed(2)}</span>
+              <span className="text-xs text-slate-500 font-bold">{isAr ? 'ر.س' : 'SAR'}</span>
             </p>
           </div>
           <div className="flex items-center gap-1.5">
@@ -141,7 +141,7 @@ export function ProductCard({ product, onQuickView, layout = false }: ProductCar
                   : 'bg-slate-200 text-slate-400 border border-slate-300 cursor-not-allowed pointer-events-none'
               }`}
             >
-              {product.inStock ? 'Buy Now' : 'Out of Stock'}
+              {product.inStock ? (isAr ? 'شراء الآن' : 'Buy Now') : (isAr ? 'نفذت الكمية' : 'Out of Stock')}
             </button>
             <button 
               onClick={(e) => {

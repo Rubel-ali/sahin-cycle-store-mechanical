@@ -1,12 +1,14 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
   const commonT = useTranslations('common');
+  const locale = useLocale();
+  const isRtl = locale === 'ar';
 
   const topImages = [
     '/gallery/gallery-1.png',
@@ -29,13 +31,15 @@ export function GalleryStrip({ showButton = true }: { showButton?: boolean }) {
       {/* Section Header */}
       <div className="text-center px-4 mb-6 sm:mb-8 relative z-10">
         <span className="text-xs sm:text-sm font-bold tracking-widest text-red-600 uppercase mb-2 inline-block">
-          VISUAL JOURNEY
+          {isRtl ? 'رحلة بصرية' : 'VISUAL JOURNEY'}
         </span>
         <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Our Cycle <span className="text-red-600">Gallery</span>
+          {isRtl ? 'معرض ' : 'Our Cycle '}<span className="text-red-600">{isRtl ? 'الدراجات' : 'Gallery'}</span>
         </h2>
         <p className="mt-3 text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed">
-          Explore our curated collection of rides, workshop moments, and community adventures across the city.
+          {isRtl 
+            ? 'استكشف مجموعتنا المختارة من الدراجات، ولحظات العمل في الورشة، ومغامرات المجتمع في جميع أنحاء المدينة.' 
+            : 'Explore our curated collection of rides, workshop moments, and community adventures across the city.'}
         </p>
         <div className="w-12 h-1 bg-red-600 mx-auto mt-4 rounded-full"></div>
       </div>

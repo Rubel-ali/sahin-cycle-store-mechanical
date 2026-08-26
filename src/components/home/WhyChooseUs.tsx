@@ -25,9 +25,9 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
 
           {/* Left side: Blob Image */}
           <div className="flex-1 lg:flex-[1.2] w-full flex justify-center lg:justify-start rtl:lg:justify-end relative lg:-ml-12 rtl:lg:-mr-12 rtl:lg:ml-0">
-            {/* The yellow blob background shadow */}
+            {/* The red blob background shadow */}
             <div
-              className="absolute w-[80%] h-[100%] bg-[#ffed4a] z-0 translate-x-8 translate-y-4"
+              className="absolute w-[80%] h-[100%] bg-[#e1251b] z-0 translate-x-8 translate-y-4"
               style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }}
             />
             {/* The actual image in a blob clip-path */}
@@ -74,7 +74,7 @@ export function WhyChooseUs({ showButton = true }: { showButton?: boolean }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group"
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#e1251b]/40 hover:shadow-sm transition-all group"
                 >
                   <div className="w-12 h-12 flex-shrink-0 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                     <feature.icon className="w-5 h-5 text-[#e1251b] stroke-[2]" />

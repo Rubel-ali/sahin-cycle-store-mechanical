@@ -1,7 +1,9 @@
 'use client';
 
-import { MapPin, CalendarClock, Smartphone, AtSign, Map, HelpCircle, MessageCircle, Wrench } from 'lucide-react';
+import { MapPin, Smartphone, AtSign, Map, HelpCircle, MessageCircle, Wrench, Truck, ShieldCheck, ChevronRight, Mail, Send } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
+import Image from 'next/image';
+import { Link } from '@/i18n/routing';
 
 const FacebookIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -23,143 +25,180 @@ const TwitterIcon = () => (
   </svg>
 );
 
+const YoutubeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path>
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+  </svg>
+);
+
 export function Footer() {
   const t = useTranslations('footer');
   const locale = useLocale();
   const isRtl = locale === 'ar';
+
+  const features = [
+    { icon: Truck, title: isRtl ? 'توصيل سريع' : 'Free & Fast Delivery', desc: isRtl ? 'في جميع أنحاء عرعر والمنطقة الشمالية' : 'Across Arar & Northern Region' },
+    { icon: Wrench, title: isRtl ? 'تجميع احترافي' : 'Professional Assembly', desc: isRtl ? 'دراجات جاهزة للركوب' : 'Ready-to-ride bike tuning' },
+    { icon: ShieldCheck, title: isRtl ? 'ضمان رسمي لمدة عامين' : '2-Year Official Warranty', desc: isRtl ? 'هيكل وقطع غيار أصلية' : 'Genuine frame & component parts' },
+    { icon: MessageCircle, title: isRtl ? 'دعم خبير عبر الواتساب' : 'WhatsApp Expert Support', desc: isRtl ? 'مساعدة فنية ومبيعات فورية' : 'Instant technical & sales help' },
+  ];
+
+  const categories = [
+    { name: isRtl ? 'دراجات الطرق' : 'Road Bicycles', href: '/products?category=road' },
+    { name: isRtl ? 'دراجات أطفال' : 'Kids BMX & Balance', href: '/products?category=kids' },
+    { name: isRtl ? 'دراجات مستعملة' : 'Used Condition Bikes', href: '/products?category=used' },
+    { name: isRtl ? 'صيانة وإصلاح' : 'Servicing & Repairs', href: '/services' },
+    { name: isRtl ? 'إكسسوارات' : 'Accessories', href: '/products?category=accessories' },
+  ];
+
+
   return (
-    <footer className="bg-white pt-20 pb-10 border-t border-gray-200">
-      <div className="container mx-auto px-4 md:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start">
+    <footer className="bg-white text-slate-600 border-t border-slate-200 pt-16 pb-8">
+      <div className="container mx-auto px-6 max-w-7xl">
+        
+        {/* Trust & Value Proposition Strip */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 pb-16 border-b border-slate-200">
+          {features.map((feat, idx) => (
+            <div key={idx} className="group flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-200/70 shadow-sm hover:border-red-500/30 hover:shadow-md hover:shadow-red-500/5 hover:-translate-y-0.5 transition-all duration-300">
+              <div className="p-3 bg-red-50 rounded-xl text-red-600 group-hover:bg-red-500 group-hover:text-white transition-colors duration-300">
+                <feat.icon className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-slate-900 font-medium mb-1">{feat.title}</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">{feat.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          {/* Column 1: Brand */}
-          <div className="flex flex-col" dir={isRtl ? 'rtl' : 'ltr'}>
-            <h2 className="text-4xl leading-tight font-medium text-gray-700 mb-1">{t('title1')}</h2>
-            <h2 className="text-4xl leading-tight font-semibold text-gray-900">
-              {isRtl ? (
-                <>دراجات <span className="text-[#e1251b]">شاهين</span></>
-              ) : (
-                <><span className="text-[#e1251b]">Sahin</span> Cycles</>
-              )}
-            </h2>
-            <h2 className="text-4xl leading-tight font-medium text-gray-700 mb-6">{t('title2')}</h2>
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16" dir={isRtl ? 'rtl' : 'ltr'}>
+          
+          {/* Column 1: Brand & Bio */}
+          <div className="flex flex-col">
+            <Link href="/" className="flex items-center gap-3 mb-6 inline-flex">
+              <Image 
+                src="/logo.png"
+                alt="Sahin Cycle Store Logo"
+                width={48}
+                height={48}
+                className="w-12 h-12 object-contain"
+              />
+              <span className="font-bold text-2xl tracking-tight text-slate-900">
+                {isRtl ? (
+                  <>دراجات <span className="text-[#e1251b]">شاهين</span></>
+                ) : (
+                  <>Sahin <span className="text-[#e1251b]">Cycles</span></>
+                )}
+              </span>
+            </Link>
             
-            <p className="text-gray-500 text-sm leading-relaxed mb-8 pr-4">
+            <p className="text-sm leading-relaxed mb-6 pr-4">
               {isRtl 
-                ? 'وجهتك الأولى للدراجات عالية الجودة وخدمات الإصلاح الاحترافية وسكوترات الأطفال في عرعر.'
-                : 'Your premier destination for high-quality bicycles, professional repair services, and kids scooters in Arar.'}
+                ? 'وجهتك الأولى للدراجات عالية الجودة، ومعدات الركوب، وخدمات الإصلاح الاحترافية. ارتقِ برحلتك معنا.'
+                : 'Your premier destination for high-quality bicycles, riding gear, and professional repair services. Elevate your ride with us.'}
             </p>
 
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#e1251b] hover:border-[#e1251b] hover:text-white transition-all shadow-sm hover:shadow-md group">
-                <div className="group-hover:scale-110 transition-transform"><FacebookIcon /></div>
+            <div className="flex gap-3">
+              {[FacebookIcon, InstagramIcon, TwitterIcon, YoutubeIcon].map((Icon, i) => (
+                <a key={i} href="#" className="w-10 h-10 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all shadow-sm hover:shadow-[0_0_15px_rgba(225,37,27,0.4)] group">
+                  <div className="group-hover:scale-110 transition-transform"><Icon /></div>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 2: Explore / Categories */}
+          <div>
+            <h3 className="text-slate-900 font-semibold text-lg mb-6">{isRtl ? 'استكشف' : 'Explore'}</h3>
+            <ul className="space-y-4">
+              {categories.map((cat, idx) => (
+                <li key={idx}>
+                  <Link href={cat.href} className="group flex items-center gap-2 hover:text-red-600 transition-colors text-sm">
+                    <ChevronRight className="w-4 h-4 text-red-600 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    <span className="group-hover:translate-x-1 transition-transform">{cat.name}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 3: Customer Care & Contact */}
+          <div>
+            <h3 className="text-slate-900 font-semibold text-lg mb-6">{isRtl ? 'خدمة العملاء' : 'Customer Care'}</h3>
+            <div className="space-y-5">
+              <a href="#" className="flex items-start gap-3 group">
+                <MapPin className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                <span className="text-sm group-hover:text-red-600 transition-colors">{isRtl ? 'شارع الملك عبدالعزيز، حي المساعدية، عرعر' : 'King Abdulaziz Road, Al Musaadiyah, Arar'}</span>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#e1251b] hover:border-[#e1251b] hover:text-white transition-all shadow-sm hover:shadow-md group">
-                <div className="group-hover:scale-110 transition-transform"><InstagramIcon /></div>
+              <a href="tel:+966500000000" className="flex items-center gap-3 group">
+                <Smartphone className="w-5 h-5 text-red-600 shrink-0" />
+                <span className="text-sm group-hover:text-red-600 transition-colors" dir="ltr">+966 50 000 0000</span>
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#e1251b] hover:border-[#e1251b] hover:text-white transition-all shadow-sm hover:shadow-md group">
-                <div className="group-hover:scale-110 transition-transform"><TwitterIcon /></div>
+              <a href="https://wa.me/966500000000" target="_blank" rel="noreferrer" className="flex items-center gap-3 group">
+                <MessageCircle className="w-5 h-5 text-red-600 shrink-0" />
+                <span className="text-sm group-hover:text-red-600 transition-colors">{isRtl ? 'تواصل عبر واتساب' : 'WhatsApp Support'}</span>
+              </a>
+              <a href="mailto:contact@sahincycles.com" className="flex items-center gap-3 group">
+                <Mail className="w-5 h-5 text-red-600 shrink-0" />
+                <span className="text-sm group-hover:text-red-600 transition-colors">contact@sahincycles.com</span>
               </a>
             </div>
           </div>
 
-          {/* Column 2: Our Location */}
-          <div dir={isRtl ? 'rtl' : 'ltr'}>
-            <h3 className="text-sm font-bold text-gray-800 mb-6 tracking-wider uppercase">{t('location')}</h3>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 group">
-                <MapPin className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2">{t('address')}</p>
-              </div>
-              <div className="flex items-start gap-4 group">
-                <CalendarClock className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2">{t('hours')}</p>
-              </div>
-              <a href="#" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <Map className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors">
-                  {isRtl ? 'عرض على الخريطة' : 'View on Map'}
-                </p>
-              </a>
-              <a href="#" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <Wrench className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors">
-                  {isRtl ? 'مركز خدمة الصيانة' : 'Repair & Service Center'}
-                </p>
-              </a>
-            </div>
-          </div>
-
-          {/* Column 3: More Information */}
-          <div dir={isRtl ? 'rtl' : 'ltr'}>
-            <h3 className="text-sm font-bold text-gray-800 mb-6 tracking-wider uppercase">{t('info')}</h3>
-            <div className="space-y-6">
-              <a href="tel:+966500000000" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <Smartphone className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors" dir="ltr">+966 50 000 0000</p>
-              </a>
-              <a href="#" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <MessageCircle className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors">
-                  {isRtl ? 'تواصل عبر واتساب' : 'WhatsApp Support'}
-                </p>
-              </a>
-              <a href="mailto:contact@sahincycle.com" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <AtSign className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors">contact@sahincycle.com</p>
-              </a>
-              <a href="#" className="flex items-start gap-4 group hover:opacity-80 transition-opacity">
-                <HelpCircle className="w-10 h-10 text-[#e1251b] shrink-0" strokeWidth={1.5} />
-                <p className="text-gray-500 text-sm leading-relaxed mt-2 group-hover:text-[#e1251b] transition-colors">
-                  {isRtl ? 'الأسئلة الشائعة والدعم' : 'FAQ & Support'}
-                </p>
-              </a>
-            </div>
-          </div>
-
-          {/* Column 4: Subscribe */}
-          <div dir={isRtl ? 'rtl' : 'ltr'}>
-            <h3 className="text-sm font-bold text-gray-800 mb-6 tracking-wider uppercase">{t('subscribe')}</h3>
-            <p className="text-gray-500 text-sm leading-relaxed mb-6">
-              {isRtl 
-                ? 'اشترك للحصول على التحديثات والوصول إلى العروض الحصرية والمزيد.'
-                : 'Subscribe to receive updates, access to exclusive deals, and more.'}
+          {/* Column 4: Newsletter */}
+          <div>
+            <h3 className="text-slate-900 font-semibold text-lg mb-6">{isRtl ? 'النشرة البريدية' : 'Newsletter'}</h3>
+            <p className="text-sm mb-4">
+              {isRtl ? 'احصل على تحديثات حصرية وعروض خاصة مباشرة في صندوق الوارد الخاص بك.' : 'Get exclusive updates and special offers directly to your inbox.'}
             </p>
-            <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
+            <form className="relative mt-2" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
-                placeholder={t('emailPlaceholder')}
-                className="w-full px-4 py-3.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[#e1251b] focus:ring-1 focus:ring-[#e1251b] transition-all bg-gray-50 text-gray-800"
+                placeholder={isRtl ? 'البريد الإلكتروني...' : 'Email address...'}
+                className="w-full bg-slate-50 border border-slate-200 rounded-full py-3.5 pl-5 pr-14 text-sm text-slate-900 focus:outline-none focus:border-red-500 focus:bg-white transition-colors"
                 required
               />
               <button
                 type="submit"
-                className="bg-[#e1251b] hover:bg-red-700 text-white font-bold text-sm tracking-wider uppercase py-3.5 px-8 rounded-lg self-start transition-all shadow-md hover:shadow-lg"
+                className="absolute right-1.5 top-1.5 bottom-1.5 bg-red-600 hover:bg-red-700 text-white rounded-full w-10 flex items-center justify-center transition-colors"
+                aria-label="Subscribe"
               >
-                {t('signUp')}
+                <Send className="w-4 h-4" />
               </button>
             </form>
-            <p className="text-gray-400 text-xs leading-relaxed mt-4">
-              {isRtl 
-                ? 'بالاشتراك، فإنك توافق على شروط الخدمة وسياسة الخصوصية الخاصة بنا.'
-                : 'By subscribing, you agree to our Terms of Service and Privacy Policy.'}
+            <p className="text-xs text-slate-400 mt-3">
+              {isRtl ? 'نحن نحترم خصوصيتك. لا بريد مزعج.' : 'We respect your privacy. No spam.'}
             </p>
           </div>
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-20 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500" dir={isRtl ? 'rtl' : 'ltr'}>
-          <p>
-            {isRtl 
-              ? `© ${new Date().getFullYear()} دراجات شاهين. جميع الحقوق محفوظة.` 
-              : `© ${new Date().getFullYear()} Sahin Cycles. All rights reserved.`}
-          </p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-[#e1251b] transition-colors">{isRtl ? 'سياسة الخصوصية' : 'Privacy Policy'}</a>
-            <a href="#" className="hover:text-[#e1251b] transition-colors">{isRtl ? 'شروط الخدمة' : 'Terms of Service'}</a>
+        {/* Bottom Copyright & Payment Bar */}
+        <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-6" dir={isRtl ? 'rtl' : 'ltr'}>
+          <div className="text-sm text-slate-500">
+             © 2026 Sahin Cycles. {isRtl ? 'جميع الحقوق محفوظة.' : 'All rights reserved.'}
+          </div>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="flex gap-4 text-sm">
+              <a href="#" className="hover:text-red-600 transition-colors">{isRtl ? 'سياسة الخصوصية' : 'Privacy Policy'}</a>
+              <span className="text-slate-300">•</span>
+              <a href="#" className="hover:text-red-600 transition-colors">{isRtl ? 'الشروط والأحكام' : 'Terms & Conditions'}</a>
+            </div>
+
+            {/* Payment Badges */}
+            <div className="flex gap-2 items-center" dir="ltr">
+              <span className="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-[10px] font-bold text-slate-600 tracking-wider">MADA</span>
+              <span className="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-[10px] font-bold text-slate-600 tracking-wider">APPLE PAY</span>
+              <span className="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-[10px] font-bold text-slate-600 tracking-wider">VISA</span>
+              <span className="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-[10px] font-bold text-slate-600 tracking-wider">MC</span>
+              <span className="px-2 py-1 bg-slate-100 border border-slate-200 rounded text-[10px] font-bold text-slate-600 tracking-wider">COD</span>
+            </div>
           </div>
         </div>
+        
       </div>
     </footer>
   );

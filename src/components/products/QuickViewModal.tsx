@@ -38,7 +38,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
           >
             <button 
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-colors shadow-sm"
+              className={`absolute top-4 ${isAr ? 'left-4' : 'right-4'} z-10 w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-slate-900 hover:bg-red-600 hover:text-white transition-colors shadow-sm`}
             >
               <X className="w-5 h-5" />
             </button>
@@ -52,8 +52,8 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
                 className="object-contain mix-blend-multiply p-8"
               />
               {product.featured && (
-                <span className="absolute top-6 left-6 px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg">
-                  Featured
+                <span className={`absolute top-6 ${isAr ? 'right-6' : 'left-6'} px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-wider rounded-lg shadow-lg`}>
+                  {isAr ? 'مميز' : 'Featured'}
                 </span>
               )}
             </div>
@@ -62,7 +62,7 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-3 pr-8">
                   <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider rounded-md border border-slate-200 capitalize">
-                    {product.category}
+                    {isAr ? (product.category === 'road' ? 'طريق' : product.category === 'mountain' ? 'جبلي' : product.category === 'kids' ? 'أطفال' : product.category === 'accessories' ? 'إكسسوارات' : product.category === 'used' ? 'مستعمل' : product.category === 'new' ? 'جديد' : product.category) : product.category}
                   </span>
                   <div className="flex items-center gap-1 ml-auto">
                     <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
@@ -80,8 +80,8 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
                 </p>
                 
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <div className="flex items-end gap-2">
-                    <span className="text-xl sm:text-2xl font-black text-red-600">SAR {product.price.toFixed(2)}</span>
+                  <div className="flex items-end gap-2" dir={isAr ? 'rtl' : 'ltr'}>
+                    <span className="text-xl sm:text-2xl font-black text-red-600">{product.price.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}</span>
                   </div>
                   <button 
                     onClick={(e) => {
@@ -102,15 +102,15 @@ export function QuickViewModal({ product, onClose }: QuickViewModalProps) {
                   </button>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Information</h3>
+                <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">{isAr ? 'معلومات' : 'Information'}</h3>
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">Condition</p>
-                    <p className="text-sm font-semibold text-slate-900 capitalize">{product.condition}</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">{isAr ? 'الحالة' : 'Condition'}</p>
+                    <p className="text-sm font-semibold text-slate-900 capitalize">{isAr ? (product.condition === 'new' ? 'جديد' : 'مستعمل') : product.condition}</p>
                   </div>
                   <div className="bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">Category</p>
-                    <p className="text-sm font-semibold text-slate-900 capitalize">{product.category}</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-1">{isAr ? 'الفئة' : 'Category'}</p>
+                    <p className="text-sm font-semibold text-slate-900 capitalize">{isAr ? (product.category === 'road' ? 'طريق' : product.category === 'mountain' ? 'جبلي' : product.category === 'kids' ? 'أطفال' : product.category === 'accessories' ? 'إكسسوارات' : product.category === 'used' ? 'مستعمل' : product.category === 'new' ? 'جديد' : product.category) : product.category}</p>
                   </div>
                 </div>
               </div>

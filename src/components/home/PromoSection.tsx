@@ -43,8 +43,9 @@ export function PromoSection() {
               className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 whitespace-pre-line"
               dir={isRtl ? 'rtl' : 'ltr'}
             >
-              {t('title1')} <br />
-              {t('title2')} <span className="text-[#e1251b]">{isRtl ? 'لا شيء' : 'Stop'}</span>{t('title3')}
+              {t('title1').split('\n')[0]} <br />
+              {t('title1').split('\n')[1] && <span>{t('title1').split('\n')[1]} </span>}
+              <span className="text-[#e1251b]">{t('title2').trim()}</span>{t('title3')}
             </motion.h2>
             
             <motion.p 
